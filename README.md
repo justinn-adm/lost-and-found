@@ -3,4 +3,4 @@
 ### Members:
   Kris Jan Shingo Bonafus\
   Carl Daniel Datan\
-  Justinn Adrian Modrigo\
+  Justinn Adrian Modrigo
