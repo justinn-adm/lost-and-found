@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+      background: #f3f4f6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .login-container {
+      background: white;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-weight: bold;
+      font-size: 36px;
+      text-align: center;
+      margin-bottom: 24px;
+      color: #111827;
+    }
+
+    .input-group {
+      margin-bottom: 16px;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 16px;
+      background-color: #f9fafb;
+    }
+
+    input::placeholder {
+      color: #9ca3af;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #10b981;
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 16px;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #059669;
+    }
+
+    .show-password-container {
+      display: flex;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    .show-password-container input {
+      margin-left: 5px;
+    }
+
+    #togglePassword {
+      position: absolute;
+      right: 10px;
+      top: 45%;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2>Login</h2>
+    <form action="dashb.html" method="POST">
+      <div class="input-group">
+        <input type="text" name="username" placeholder="Username" required>
+      </div>
+      <div class="input-group">
+        <input type="password" name="password" id="password" placeholder="Password" required>
+        <i class="fas fa-eye" id="togglePassword"></i>
+      </div>
+      <button type="submit">Login</button>
+    </form>
+  </div>
+
+  <script>
+   
+    document.getElementById('togglePassword').addEventListener('click', function () {
+      var passwordField = document.getElementById('password');
+      var type = passwordField.type === 'password' ? 'text' : 'password';
+      passwordField.type = type;
+
+      
+      this.classList.toggle('fa-eye-slash');
+    });
+  </script>
+
+  
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</body>
+</html>

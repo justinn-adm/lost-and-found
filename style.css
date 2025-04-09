@@ -1,0 +1,39 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin-top: 100px;
+    background: #f3f3f3;
+  }
+  
+  input, button {
+    display: block;
+    margin: 10px auto;
+    padding: 10px;
+    width: 200px;
+  }
+  
+  .buttons a {
+    margin: 10px;
+    padding: 10px 20px;
+    background: rgb(138, 19, 19);
+    color: white;
+    text-decoration: none;
+  }
+
+    .top-right-links {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+      }
+  
+      .top-right-links a {
+        margin-left: 15px;
+        color: rgb(226, 179, 25);
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+  
+      .top-right-links a:hover {
+        color: rgb(162, 29, 31);
+      }
+    }
