@@ -187,21 +187,13 @@
       color: #10b981;
     }
 
-    .controls {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-    }
-
-    input[type="file"] {
-      padding: 8px;
-    }
-
     .items-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
       gap: 20px;
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 10px;
     }
 
     .item-card {
@@ -268,12 +260,6 @@
     <a href="forgot-password.html" class="forgot-password">Forgot Password?</a>
   </div>
 
-  <div class="controls">
-    <input type="file" id="imageInput" accept="image/*">
-    <input type="text" id="itemLabel" placeholder="Item Name (e.g. Umbrella)">
-    <button onclick="addLostItem()">POST</button>
-  </div>
-
   <div class="items-grid" id="itemsGrid"></div>
 
   <script>
@@ -289,41 +275,6 @@
     document.addEventListener('DOMContentLoaded', () => {
       fetchItems();
     });
-
-    function addLostItem() {
-      const input = document.getElementById('imageInput');
-      const label = document.getElementById('itemLabel').value.trim();
-
-      if (!input.files[0]) {
-        alert('Please select an image.');
-        return;
-      }
-
-      if (!label) {
-        alert('Please enter a name for the item.');
-        return;
-      }
-
-      const formData = new FormData();
-      formData.append('image', input.files[0]);
-      formData.append('name', label);
-
-      fetch('upload.php', {
-        method: 'POST',
-        body: formData,
-      })
-      .then(response => response.text())
-      .then(data => {
-        alert(data);
-        fetchItems();  
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-
-      input.value = '';
-      document.getElementById('itemLabel').value = '';
-    }
 
     function fetchItems() {
       fetch('get_items.php')
