@@ -166,7 +166,7 @@
       transform: translateY(-50%);
       color: #9ca3af;
       cursor: pointer;
-      transition: 0.3s;
+      z-index: 2; 
     }
 
     #togglePassword:hover {
@@ -269,6 +269,7 @@
     toggle.addEventListener('click', function () {
       const type = password.type === 'password' ? 'text' : 'password';
       password.type = type;
+      
       this.classList.toggle('fa-eye-slash');
     });
 
@@ -285,7 +286,7 @@
           data.forEach(item => {
             const card = document.createElement('div');
             card.className = 'item-card';
-            card.innerHTML = `
+            card.innerHTML = ` 
               <img src="${item.image_path}" alt="${item.name}">
               <p>${item.name}</p>
               <button>Details</button>
