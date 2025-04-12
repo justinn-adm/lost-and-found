@@ -15,11 +15,97 @@
       font-family: 'Inter', sans-serif;
       color: #333;
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 20px;
       height: 100vh;
-      overflow-y: auto; 
+      overflow: hidden;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .sidebar {
+      width: 250px;
+      background-color: #004225;
+      color: white;
+      padding: 30px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    .sidebar h1 {
+      font-size: 20px;
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+
+    .sidebar nav a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 16px;
+      margin: 10px 0;
+      padding: 10px 15px;
+      border-radius: 8px;
+      transition: background-color 0.2s ease;
+      display: block;
+      background-color: #226644;
+    }
+
+    .sidebar nav a:hover {
+      background-color: #3BAF75;
+    }
+
+    .main-content {
+      flex: 1;
+      padding: 30px;
+      overflow-y: auto;
+      background: linear-gradient(to bottom right, #f0f4f3, #e9f7f1);
+      background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+      position: relative;
+    }
+
+    .theme-toggle {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      background-color: #2ecc71;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .theme-toggle:hover {
+      background-color: #27ae60;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .header h2 {
+      font-size: 28px;
+      color: #004225;
+    }
+
+    .header p {
+      font-size: 16px;
+      color: #555;
+      margin-top: 10px;
+    }
+
+    .quote-box {
+      background-color: #dff5e3;
+      border-left: 5px solid #2ecc71;
+      padding: 20px;
+      margin: 20px auto 30px;
+      max-width: 700px;
+      border-radius: 12px;
+      font-style: italic;
+      color: #2c3e50;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
 
     .post-section {
@@ -28,8 +114,11 @@
       gap: 15px;
       max-width: 600px;
       width: 100%;
-      margin-top: 40px;
-      text-align: center;
+      margin: 0 auto 30px;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
 
     .post-section input[type="file"],
@@ -42,17 +131,18 @@
 
     .post-section button {
       padding: 12px 20px;
-      background-color: #007BFF;
+      background-color: #2ecc71;
       color: white;
       border: none;
       border-radius: 8px;
       font-size: 16px;
+      font-weight: bold;
       cursor: pointer;
       transition: background-color 0.2s ease;
     }
 
     .post-section button:hover {
-      background-color: #0056b3;
+      background-color: #27ae60;
     }
 
     .items-grid {
@@ -60,9 +150,7 @@
       grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
       gap: 20px;
       max-width: 1200px;
-      margin-top: 30px;
-      width: 100%;
-      overflow-y: auto;
+      margin: 0 auto;
     }
 
     .item-card {
@@ -89,36 +177,107 @@
     }
 
     .item-card button {
-      background-color: #007BFF;
+      background-color: #16a085;
       border: none;
-      color: rgb(0, 0, 0);
+      color: white;
       padding: 10px 15px;
-      margin-bottom: 10px;
+      margin-top: 10px;
       cursor: pointer;
-      border-radius: 5px;
+      border-radius: 6px;
       transition: background-color 0.2s ease;
     }
 
     .item-card button:hover {
-      background-color: #0056b3;
+      background-color: #12876f;
     }
 
     .item-card:hover {
-      transform: scale(1.05);
+      transform: scale(1.03);
+    }
+
+    body.dark-mode {
+      background: #1e1e1e;
+      color: #eee;
+    }
+
+    body.dark-mode .main-content {
+      background: #2c2c2c;
+    }
+
+    body.dark-mode .header h2 {
+      color: #b8f5cb;
+    }
+
+    body.dark-mode .header p {
+      color: #ccc;
+    }
+
+    body.dark-mode .quote-box {
+      background-color: #3a3a3a;
+      border-left-color: #27ae60;
+      color: #d0f0dd;
+    }
+
+    body.dark-mode .post-section {
+      background: #444;
+    }
+
+    body.dark-mode .post-section input,
+    body.dark-mode .post-section input::placeholder {
+      background: #555;
+      color: white;
+      border-color: #777;
+    }
+
+    body.dark-mode .item-card {
+      background-color: #3a3a3a;
+    }
+
+    body.dark-mode .item-card p {
+      color: #d8f6ea;
     }
   </style>
 </head>
 <body>
 
-  <div class="post-section">
-    <input type="file" id="imageInput" accept="image/*">
-    <input type="text" id="itemLabel" placeholder="Item Name (e.g. Umbrella)">
-    <button onclick="addLostItem()">POST</button>
+  <div class="sidebar">
+    <h1>Welcome to CvSU Naic<br>Lost and Found</h1>
+    <nav>
+      <a href="#">📦 View Lost Items</a>
+      <a href="#">📝 Post Lost Items</a>
+      <a href="#">📞 Talk to an Admin</a>
+      <a href="index.html">🔙 Back to Login</a>
+    </nav>
   </div>
 
-  <div class="items-grid" id="itemsGrid"></div>
+  <div class="main-content">
+    <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+
+    <div class="header">
+      <h2>Burara ka ba? Tanga ka kasi!!</h2>
+      <p>This platform allows CvSU Naic students to report and find lost items quickly and easily.</p>
+    </div>
+
+    <div class="quote-box">
+      “It’s not about the item, it’s about the value it holds for someone.”
+    </div>
+
+    <div class="post-section">
+      <input type="file" id="imageInput" accept="image/*">
+      <input type="text" id="itemLabel" placeholder="Item Name (e.g. Umbrella)">
+      <button onclick="addLostItem()">POST</button>
+    </div>
+
+    <div class="items-grid" id="itemsGrid"></div>
+  </div>
 
   <script>
+    function toggleTheme() {
+      document.body.classList.toggle("dark-mode");
+      const btn = document.querySelector(".theme-toggle");
+      btn.textContent = document.body.classList.contains("dark-mode") ? "☀️" : "🌙";
+    }
+
     function addLostItem() {
       const input = document.getElementById('imageInput');
       const label = document.getElementById('itemLabel').value.trim();
@@ -133,38 +292,36 @@
         return;
       }
 
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        const grid = document.getElementById('itemsGrid');
+      const formData = new FormData();
+      formData.append('image', input.files[0]);
+      formData.append('name', label);
 
-        const card = document.createElement('div');
-        card.className = 'item-card';
-
-        card.innerHTML = `
-          <img src="${e.target.result}" alt="${label}">
-          <p>${label}</p>
-          <button>Details</button>
-        `;
-
-        grid.prepend(card); 
-      };
-
-      reader.readAsDataURL(input.files[0]);
+      fetch('upload.php', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.text())
+      .then(result => {
+        if (result === "success") {
+          fetchItems();
+        } else {
+          alert("Failed to upload. Server said: " + result);
+        }
+      })
+      .catch(error => {
+        console.error('Upload error:', error);
+      });
 
       input.value = '';
       document.getElementById('itemLabel').value = '';
     }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      fetchItems();
-    });
 
     function fetchItems() {
       fetch('get_items.php')
         .then(response => response.json())
         .then(data => {
           const grid = document.getElementById('itemsGrid');
-          grid.innerHTML = ''; 
+          grid.innerHTML = '';
           data.forEach(item => {
             const card = document.createElement('div');
             card.className = 'item-card';
@@ -180,6 +337,8 @@
           console.error('Error fetching items:', error);
         });
     }
+
+    document.addEventListener('DOMContentLoaded', fetchItems);
   </script>
 
 </body>
