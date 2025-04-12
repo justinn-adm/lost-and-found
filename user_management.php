@@ -98,7 +98,7 @@ $result = $conn->query($sql);
     }
 
     .edit-btn {
-      background-color: #f0ad4e;
+      background-color:rgb(76, 220, 51);
       color: #fff;
     }
 
