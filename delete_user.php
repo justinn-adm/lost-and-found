@@ -1,10 +1,23 @@
 <?php
 include 'db.php';
 
-$id = $_GET['id'];
-$query = "DELETE FROM users WHERE id = $id";
-mysqli_query($conn, $query);
+if (isset($_GET['id'])) {
+    $id = $_GET['id'];
 
-header("Location: user_management.php");
-exit();
+   
+    $id = intval($id);
+
+   
+    $query = "DELETE FROM users WHERE id = $id";
+    $result = mysqli_query($conn, $query);
+
+    if ($result) {
+        header("Location: user_management.php?message=deleted");
+        exit();
+    } else {
+        echo "Error deleting user: " . mysqli_error($conn);
+    }
+} else {
+    echo "Invalid request.";
+}
 ?>
