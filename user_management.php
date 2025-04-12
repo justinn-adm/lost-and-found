@@ -2,8 +2,8 @@
 include 'db.php';
 session_start();
 
-// Fetch users
-$sql = "SELECT * FROM users"; // adjust 'users' to your table name
+
+$sql = "SELECT * FROM users"; 
 $result = $conn->query($sql);
 ?>
 
