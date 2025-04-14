@@ -1,45 +1,36 @@
 <?php
-$servername = "localhost";
-$username = "root";  /
-$password = "";     
-$dbname = "lost_and_found";  
+$host = "localhost";
+$user = "root";
+$pass = "";
+$dbname = "Lost_and_found"; 
 
+$conn = new mysqli($host, $user, $pass, $dbname);
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $targetDir = "uploads/";
 
+    if (!file_exists($targetDir)) {
+        mkdir($targetDir, 0777, true);
+    }
 
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $name = $_POST['name'];
+    $itemName = $_POST['name'];
     $image = $_FILES['image'];
 
-   
-    if (empty($name) || empty($image['name'])) {
-        echo "Please provide an item name and select an image.";
-        exit;
-    }
+    if ($image && $itemName) {
+        $fileName = time() . '_' . basename($image["name"]);
+        $targetFilePath = $targetDir . $fileName;
 
- 
-    $imagePath = "uploads/" . basename($image['name']);
-    if (!move_uploaded_file($image['tmp_name'], $imagePath)) {
-        echo "Error uploading the image.";
-        exit;
-    }
+        if (move_uploaded_file($image["tmp_name"], $targetFilePath)) {
+            $stmt = $conn->prepare("INSERT INTO lost_items (name, image_path) VALUES (?, ?)");
+            $stmt->bind_param("ss", $itemName, $targetFilePath);
+            $stmt->execute();
 
-    $stmt = $conn->prepare("INSERT INTO items (name, image_path) VALUES (?, ?)");
-    $stmt->bind_param("ss", $name, $imagePath);
-
-    if ($stmt->execute()) {
-        echo "Item added successfully!";
+            echo "success";
+        } else {
+            echo "error_uploading";
+        }
     } else {
-        echo "Error: " . $stmt->error;
+        echo "invalid_input";
     }
-
-    $stmt->close();
 }
-
-$conn->close();
 ?>
