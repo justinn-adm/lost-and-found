@@ -122,7 +122,7 @@ $result = $conn->query($sql);
     <h1>User Management</h1>
     <div>
       <a href="index.html" class="home-btn"><i class="fas fa-home"></i> Home</a>
-      <a href="add_user.php" class="add-user-btn"><i class="fas fa-user-plus"></i> Add User</a>
+      <a href="add_user.php" class="add-user-btn"><i class="fas fa-user-plus"></i> Add Admin</a>
     </div>
   </div>
 
