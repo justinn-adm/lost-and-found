@@ -1,16 +1,13 @@
 <?php
-$servername = "localhost";
-$username = "root"; 
-$password = "";      
-$dbname = "lost_and_found";  
-
-$conn = new mysqli($servername, $username, $password, $dbname);
+include 'db.php';
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$result = $conn->query("SELECT * FROM items ORDER BY created_at DESC");
+header('Content-Type: application/json');
+
+$result = $conn->query("SELECT * FROM lost_items ORDER BY date_found");
 
 $items = [];
 
@@ -23,4 +20,3 @@ if ($result->num_rows > 0) {
 echo json_encode($items);
 
 $conn->close();
-?>
