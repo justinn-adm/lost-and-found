@@ -1,284 +1,266 @@
-  <!DOCTYPE html>
-  <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <title>Lost and Found CvSU Naic</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@800&family=Poppins:wght@700&display=swap" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lost and Found CvSU Naic</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@800&family=Poppins:wght@700&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: url('bg.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background: rgba(40, 37, 37, 0.5);
+      flex-wrap: wrap;
+    }
+
+    .navbar-title {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .navbar-title img {
+      width: 80px;
+      height: 50px;
+      object-fit: contain;
+    }
+
+    .navbar-title span {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .nav-links a {
+      margin-left: 20px;
+      text-decoration: none;
+      color: #ffffff;
+      font-weight: 600;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: #10b981;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
       }
 
-      body {
-        font-family: 'Inter', sans-serif;
-        background: url('bg.jpg') no-repeat center center fixed;
-        background-size: cover;
-        color: #fff;
-        min-height: 100vh;
+      .nav-links {
+        margin-top: 10px;
         display: flex;
         flex-direction: column;
-      }
-
-      header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 20px 40px;
-        background: rgba(0, 0, 0, 0.5);
-        flex-wrap: wrap;
-      }
-
-      .navbar-title {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-      }
-
-      .navbar-title img {
-        width: 80px;
-        height: 50px;
-        object-fit: contain;
-      }
-
-      .navbar-title span {
-        font-size: 1.5rem;
-        font-weight: 800;
-        color: #ffffff;
+        align-items: flex-start;
       }
 
       .nav-links a {
-        margin-left: 20px;
-        text-decoration: none;
-        color: #ffffff;
-        font-weight: 600;
-        transition: color 0.2s ease;
+        margin: 5px 0;
       }
+    }
 
-      .nav-links a:hover {
-        color: #10b981;
+    .main-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      margin-top: 30px;
+      padding: 0 60px;
+    }
+
+    .typing-box {
+      flex: 1;
+      min-width: 300px;
+      font-family: 'Poppins', sans-serif;
+      margin-top: 30px;
+    }
+
+    .typing-box h1 {
+      font-size: 3.5rem;
+      line-height: 1.2;
+      color: #e0f2f1;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .typing-box span {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s ease forwards;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
       }
+    }
 
-      @media (max-width: 600px) {
-        header {
-          flex-direction: column;
-          align-items: flex-start;
-        }
+    .login-wrapper {
+      display: flex;
+      justify-content: flex-end;
+      flex: 1;
+    }
 
-        .nav-links {
-          margin-top: 10px;
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-        }
+    .login-container {
+      backdrop-filter: blur(16px) saturate(180%);
+      background-color: rgb(255, 255, 255);
+      border-radius: 16px;
+      border: 1px solid rgba(209, 213, 219, 0.3);
+      padding: 40px 30px;
+      max-width: 460px;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+      color: #111827;
+      margin-top: 30px;
+    }
 
-        .nav-links a {
-          margin: 5px 0;
-        }
-      }
+    h2 {
+      font-family: 'Inter', sans-serif;
+      font-size: 28px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 24px;
+      color: #111827;
+    }
 
-      .main-container {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        flex-wrap: wrap;
-        margin-top: 30px; /* ⬅ Higher position */
-        padding: 0 60px;
-      }
+    .input-group {
+      position: relative;
+      margin-bottom: 24px;
+    }
 
-      .typing-box {
-        flex: 1;
-        min-width: 300px;
-        font-family: 'Poppins', sans-serif;
-        margin-top: 30px;
-      }
+    .input-group input {
+      width: 100%;
+      padding: 16px 14px;
+      font-size: 16px;
+      background: transparent;
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      color: #111827;
+      outline: none;
+      transition: all 0.3s ease;
+    }
 
-      .typing-box h1 {
-        font-size: 3.5rem;
-        line-height: 1.2;
-        color: #e0f2f1;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        animation: fadeLoop 4s infinite;
-      }
+    .input-group label {
+      position: absolute;
+      top: 50%;
+      left: 14px;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.8);
+      padding: 0 6px;
+      font-size: 16px;
+      color: #6b7280;
+      pointer-events: none;
+      transition: 0.3s ease all;
+    }
 
-      .typing-box span {
-        opacity: 0;
-        transform: translateY(20px);
-        animation: fadeInUp 0.8s ease forwards;
-      }
+    .input-group input:focus + label,
+    .input-group input:not(:placeholder-shown) + label {
+      top: -10px;
+      left: 10px;
+      font-size: 12px;
+      color: #10b981;
+    }
 
-      .typing-box span:nth-child(1) {
-        animation-delay: 0.2s;
-      }
+    .input-group input::placeholder {
+      color: transparent;
+    }
 
-      .typing-box span:nth-child(2) {
-        animation-delay: 0.6s;
-      }
+    button {
+      width: 100%;
+      padding: 14px;
+      background-color: #10b981;
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
+    }
 
-      @keyframes fadeInUp {
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
+    button:hover {
+      background-color: #059669;
+    }
 
-      @keyframes fadeLoop {
-        0% {
-          opacity: 0;
-          transform: translateY(20px);
-        }
-        10% {
-          opacity: 1;
-          transform: translateY(0);
-        }
-        90% {
-          opacity: 1;
-          transform: translateY(0);
-        }
-        100% {
-          opacity: 0;
-          transform: translateY(20px);
-        }
-      }
+    #togglePassword {
+      position: absolute;
+      top: 50%;
+      right: 14px;
+      transform: translateY(-50%);
+      color: #9ca3af;
+      cursor: pointer;
+      z-index: 2;
+    }
 
-      .login-container {
-        backdrop-filter: blur(16px) saturate(180%);
-        background-color: rgb(255, 255, 255);
-        border-radius: 16px;
-        border: 1px solid rgba(209, 213, 219, 0.3);
-        padding: 40px 30px;
-        max-width: 420px;
-        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
-        color: #111827;
-        margin-left: auto;
-        margin-right: 60px;
-        margin-top: 30px;
-      }
+    #togglePassword:hover {
+      color: #4b5563;
+    }
 
-      h2 {
-        font-family: 'Inter', sans-serif;
-        font-size: 28px;
-        font-weight: 700;
-        text-align: center;
-        margin-bottom: 24px;
-        color: #111827;
-      }
+    .forgot-password {
+      display: block;
+      text-align: center;
+      margin-top: 10px;
+      font-size: 14px;
+      color: #6b7280;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
 
-      .input-group {
-        position: relative;
-        margin-bottom: 24px;
-      }
+    .forgot-password:hover {
+      color: #10b981;
+    }
 
-      .input-group input {
-        width: 100%;
-        padding: 16px 14px;
-        font-size: 16px;
-        background: transparent;
-        border: 1px solid #d1d5db;
-        border-radius: 10px;
-        color: #111827;
-        outline: none;
-        transition: all 0.3s ease;
-      }
+    .nav-links {
+      display: flex;
+      justify-content: flex-end;
+      flex: 1;
+    }
+  </style>
+</head>
 
-      .input-group label {
-        position: absolute;
-        top: 50%;
-        left: 14px;
-        transform: translateY(-50%);
-        background: rgba(255, 255, 255, 0.8);
-        padding: 0 6px;
-        font-size: 16px;
-        color: #6b7280;
-        pointer-events: none;
-        transition: 0.3s ease all;
-      }
+<body>
 
-      .input-group input:focus + label,
-      .input-group input:not(:placeholder-shown) + label {
-        top: -10px;
-        left: 10px;
-        font-size: 12px;
-        color: #10b981;
-      }
+  <header>
+    <div class="navbar-title">
+      <img src="images/logo.png" alt="CvSU Logo">
+      <span>CvSU Naic Lost and Found</span>
+    </div>
+    <nav class="nav-links">
+      <a href="register.html">Don't have an Account?</a>
+    </nav>
+  </header>
 
-      .input-group input::placeholder {
-        color: transparent;
-      }
+  <div class="main-container">
+    <div class="typing-box">
+      <h1 id="typingText">
+        <span>Looking For</span>
+        <span>Something?</span>
+      </h1>
+    </div>
 
-      button {
-        width: 100%;
-        padding: 14px;
-        background-color: #10b981;
-        color: white;
-        font-size: 16px;
-        font-weight: 600;
-        border: none;
-        border-radius: 10px;
-        cursor: pointer;
-        transition: background 0.3s ease;
-        box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
-      }
-
-      button:hover {
-        background-color: #059669;
-      }
-
-      #togglePassword {
-        position: absolute;
-        top: 50%;
-        right: 14px;
-        transform: translateY(-50%);
-        color: #9ca3af;
-        cursor: pointer;
-        z-index: 2;
-      }
-
-      #togglePassword:hover {
-        color: #4b5563;
-      }
-
-      .forgot-password {
-        display: block;
-        text-align: center;
-        margin-top: 10px;
-        font-size: 14px;
-        color: #6b7280;
-        text-decoration: none;
-        transition: color 0.2s ease;
-      }
-
-      .forgot-password:hover {
-        color: #10b981;
-      }
-    </style>
-  </head>
-  <body>
-
-    <header>
-      <div class="navbar-title">
-        <img src="images/logo.png" alt="CvSU Logo">
-        <span>CvSU Naic Lost and Found</span>
-      </div>
-      <nav class="nav-links">
-        <a href="register.html">Don't have an Account?</a>
-      </nav>
-    </header>
-
-    <div class="main-container">
-      <!-- Left Text -->
-      <div class="typing-box">
-        <h1>
-          <span>Looking For</span>
-          <span>Something?</span>
-        </h1>
-      </div>
-
-      <!-- Login Form -->
+    <div class="login-wrapper">
       <div class="login-container">
         <h2>Login your Account</h2>
         <form action="login.php" method="POST">
@@ -296,17 +278,46 @@
         <a href="forgot-password.html" class="forgot-password">Forgot Password?</a>
       </div>
     </div>
+  </div>
 
-    <script>
-      const toggle = document.getElementById('togglePassword');
-      const password = document.getElementById('password');
+  <script>
+    const toggle = document.getElementById('togglePassword');
+    const password = document.getElementById('password');
 
-      toggle.addEventListener('click', function () {
-        const type = password.type === 'password' ? 'text' : 'password';
-        password.type = type;
-        this.classList.toggle('fa-eye-slash');
+    toggle.addEventListener('click', function () {
+      const type = password.type === 'password' ? 'text' : 'password';
+      password.type = type;
+      this.classList.toggle('fa-eye-slash');
+    });
+
+    const phrases = [
+      ["Looking For", "Something?"],
+      ["Lost an", "Item?"],
+      ["Found", "Something?"],
+      ["Need to Report", "  a Loss?"],
+      ["Reclaim Your", "Belongings?"],
+      ["Help Us Return", "Items!"]
+    ];
+
+    const typingBox = document.getElementById("typingText");
+    let index = 0;
+
+    function updateTypingText() {
+      const [line1, line2] = phrases[index];
+      typingBox.innerHTML = `<span>${line1}</span><span>${line2}</span>`;
+      const spans = typingBox.querySelectorAll('span');
+      spans.forEach((span, i) => {
+        span.style.opacity = 0;
+        span.style.transform = 'translateY(20px)';
+        span.style.animation = `fadeInUp 0.8s ease forwards`;
+        span.style.animationDelay = `${0.4 + i * 0.4}s`;
       });
-    </script>
+      index = (index + 1) % phrases.length;
+    }
 
-  </body>
-  </html>
+    updateTypingText();
+    setInterval(updateTypingText, 2800);
+  </script>
+
+</body>
+</html>
