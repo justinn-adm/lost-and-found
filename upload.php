@@ -1,10 +1,6 @@
 <?php
-$host = "localhost";
-$user = "root";
-$pass = "";
-$dbname = "lost_and_found"; 
+include 'db.php';
 
-$conn = new mysqli($host, $user, $pass, $dbname);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $targetDir = "uploads/";
