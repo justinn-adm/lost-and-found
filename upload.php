@@ -1,10 +1,6 @@
 <?php
-$host = "localhost";
-$user = "root";
-$pass = "";
-$dbname = "Lost_and_found"; 
+include 'db.php';
 
-$conn = new mysqli($host, $user, $pass, $dbname);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $targetDir = "uploads/";
@@ -15,14 +11,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $itemName = $_POST['name'];
     $image = $_FILES['image'];
+    $date = $_POST['date'];
+    $location = $_POST['location'];
+    $description = $_POST['description'];
 
     if ($image && $itemName) {
         $fileName = time() . '_' . basename($image["name"]);
         $targetFilePath = $targetDir . $fileName;
 
         if (move_uploaded_file($image["tmp_name"], $targetFilePath)) {
-            $stmt = $conn->prepare("INSERT INTO lost_items (name, image_path) VALUES (?, ?)");
-            $stmt->bind_param("ss", $itemName, $targetFilePath);
+            $stmt = $conn->prepare("INSERT INTO lost_items (name, image_path, description, date_found, location) VALUES (?, ?, ?, ?, ?)");
+            $stmt->bind_param("sssss", $itemName, $targetFilePath, $description, $date, $location);
             $stmt->execute();
 
             echo "success";
