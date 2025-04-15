@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Post Lost Item - CvSU Naic</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,600&display=swap" rel="stylesheet">
+  <style>
+    /* Same styles as before */
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(to bottom right, #f0f4f3, #e9f7f1);
+      background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+      padding: 40px;
+      margin: 0;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .header h2 {
+      font-size: 28px;
+      color: #004225;
+    }
+
+    .post-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      max-width: 700px;
+      width: 100%;
+      margin: 0 auto;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .post-section input[type="file"],
+    .post-section input[type="text"],
+    .post-section input[type="date"],
+    .post-section textarea {
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      flex: 1 1 100%;
+    }
+
+    .post-section textarea {
+      resize: vertical;
+    }
+
+    .post-section button {
+      padding: 12px 20px;
+      background-color: #2ecc71;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .post-section button:hover {
+      background-color: #27ae60;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h2>Post a Lost Item</h2>
+    <p>Fill in the details to help someone find their lost belongings.</p>
+  </div>
+
+  <div class="post-section">
+    <input type="file" id="imageInput" accept="image/*">
+    <input type="text" id="itemLabel" placeholder="Item Name (e.g. Umbrella)">
+    <input type="date" id="itemDate">
+    <input type="text" id="itemLocation" placeholder="Location (e.g. Building 2)">
+    <textarea id="itemDescription" rows="2" placeholder="Short description..."></textarea>
+    <button onclick="addLostItem()">POST</button>
+  </div>
+
+  <script>
+    function addLostItem() {
+      const input = document.getElementById('imageInput');
+      const label = document.getElementById('itemLabel').value.trim();
+      const date = document.getElementById('itemDate').value;
+      const location = document.getElementById('itemLocation').value.trim();
+      const description = document.getElementById('itemDescription').value.trim();
+
+      if (!input.files[0]) return alert('Please select an image.');
+      if (!label) return alert('Please enter a name for the item.');
+
+      const formData = new FormData();
+      formData.append('image', input.files[0]);
+      formData.append('name', label);
+      formData.append('date', date);
+      formData.append('location', location);
+      formData.append('description', description);
+
+      fetch('upload.php', {
+        method: 'POST',
+        body: formData
+      })
+      .then(res => res.text())
+      .then(result => {
+        if (result === "success") alert("Item posted successfully!");
+        else alert("Failed to upload. Server said: " + result);
+      })
+      .catch(error => console.error('Upload error:', error));
+
+      input.value = '';
+      document.getElementById('itemLabel').value = '';
+      document.getElementById('itemDate').value = '';
+      document.getElementById('itemLocation').value = '';
+      document.getElementById('itemDescription').value = '';
+    }
+  </script>
+
+</body>
+</html>
