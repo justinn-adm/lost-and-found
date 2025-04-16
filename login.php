@@ -16,14 +16,7 @@ $stmtCheck->bind_param("s", $adminUsername);
 $stmtCheck->execute();
 $resultCheck = $stmtCheck->get_result();
 
-if ($resultCheck->num_rows === 0) {
-    $hashedPassword = password_hash($adminPassword, PASSWORD_DEFAULT);
-    $sqlInsert = "INSERT INTO users (username, password, email, image_path, role) VALUES (?, ?, ?, ?, ?)";
-    $stmtInsert = $conn->prepare($sqlInsert);
-    $stmtInsert->bind_param("sssss", $adminUsername, $hashedPassword, $adminEmail, $adminImage, $adminRole);
-    $stmtInsert->execute();
-}
-
+    
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username_input = trim($_POST['username'] ?? '');
     $password_input = $_POST['password'] ?? '';
