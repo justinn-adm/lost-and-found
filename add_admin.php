@@ -79,24 +79,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
 
   <div class="form-container">
-    <h1>Add New User</h1>
-    <form action="add_user.php" method="POST">
-      <label for="username">Username</label>
+    <h1>Add New Admin</h1>
+    <form action="add_admin.php" method="POST">
+      <label for="username">Admin Name</label>
       <input type="text" id="username" name="username" required>
 
       <label for="email">Email</label>
       <input type="email" id="email" name="email" required>
 
-      <label for="role">Role</label>
-      <select id="role" name="role" required>
-        <option value="admin">Admin</option>
-        <option value="user">User</option>
       </select>
 
       <label for="password">Password</label>
       <input type="password" id="password" name="password" required>
 
-      <button type="submit" class="submit-btn"><i class="fas fa-user-plus"></i> Add User</button>
+      <button type="submit" class="submit-btn"><i class="fas fa-user-plus"></i> Add Admin</button>
     </form>
   </div>
 
