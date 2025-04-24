@@ -1,4 +1,3 @@
-
 <?php
 
 include 'db.php';
@@ -9,26 +8,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = isset($_POST['password']) ? $_POST['password'] : null;
 
     if (!empty($username) && !empty($email) && !empty($password)) {
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        $check_sql = "SELECT id FROM users WHERE username = ?";
+        $check_stmt = $conn->prepare($check_sql);
+        $check_stmt->bind_param("s", $username);
+        $check_stmt->execute();
+        $check_stmt->store_result();
 
-        $sql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
-        $stmt = $conn->prepare($sql);
-
-        if ($stmt) {
-            $stmt->bind_param("sss", $username, $email, $hashed_password);
-
-            if ($stmt->execute()) {
-                echo "Registration successful. <a href='index.php'>Login now</a>";
-            } else {
-                echo "Database error: " . $stmt->error;
-            }
+        if ($check_stmt->num_rows > 0) {
+            echo "<script>alert('Username already taken. Please choose a different one.'); window.history.back();</script>";
         } else {
-            echo "Failed to prepare statement.";
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+            $sql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
+            $stmt = $conn->prepare($sql);
+
+            if ($stmt) {
+                $stmt->bind_param("sss", $username, $email, $hashed_password);
+
+                if ($stmt->execute()) {
+                    echo "<script>alert('Registration successful!'); window.location.href='index.php';</script>";
+                } else {
+                    echo "<script>alert('Database error: " . $stmt->error . "');</script>";
+                }
+            } else {
+                echo "<script>alert('Failed to prepare statement.');</script>";
+            }
         }
+
+        $check_stmt->close();
     } else {
-        echo "All fields are required.";
+        echo "<script>alert('All fields are required.'); window.history.back();</script>";
     }
 } else {
-    echo "Invalid request method.";
+    echo "<script>alert('Invalid request method.');</script>";
 }
 ?>
