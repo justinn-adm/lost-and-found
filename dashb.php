@@ -94,15 +94,7 @@ if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'admin') {
       flex-direction: column;
     }
 
-    .topbar {
-      background-color: #000;
-      padding: 20px 40px;
-      box-shadow: 0 2px 4px #fff;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      color: #fff;
-    }
+   
 
     header a {
       margin-left: 20px;
@@ -155,20 +147,7 @@ if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'admin') {
       font-size: 0.9rem;
     }
 
-    .home-btn {
-      background-color: #28a745;
-      color: white;
-      padding: 8px 12px;
-      text-decoration: none;
-      border-radius: 5px;
-      font-weight: bold;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-      transition: background-color 0.3s ease;
-    }
-
-    .home-btn:hover {
-      background-color: #218838;
-    }
+    
   </style>
 </head>
 <body>
@@ -182,24 +161,19 @@ if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'admin') {
       </div>
     </div>
     <nav>
-      <a href="#" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-      <a href="#"><i class="fas fa-briefcase"></i> Lost and Found Item</a>
-      <a href="#"><i class="fas fa-image"></i> Post Images</a>
-      <a href="#"><i class="fas fa-tags"></i> Post Category</a>
-      <a href="#"><i class="fas fa-info-circle"></i> Member Information</a>
-      <a href="#"><i class="fas fa-id-badge"></i> Member Credential</a>
-      <a href="user_management.php"><i class="fas fa-users-cog"></i> User Management</a>
-      <a href="#"><i class="fas fa-user-friends"></i> User Group</a>
-      <a href="logout.php"><i class="fas fa-power-off"></i> Logout</a>
-    </nav>
+  <a href="#" class="active"><i class="fas fa-tachometer-alt"></i>🏠 Dashboard</a>
+  <a href="#"><i class="fas fa-briefcase"></i>🕵️‍♂️ Lost and Found Item</a>
+  <a href="#"><i class="fas fa-image"></i>🖼️ Post Images </a>
+  <a href="user_management.php"><i class="fas fa-users-cog"></i>👥 User Management</a>
+  <a href="logout.php"><i class="fas fa-power-off"></i>🚪 Logout</a>
+</nav>
+
   </aside>
 
   <div class="main-content">
     <div class="topbar">
-      <h1>Dashboard</h1>
-      <header>
-        <a href="index.html" class="home-btn"><i class="fas fa-home"></i> Home</a>
-      </header>
+      
+     
     </div>
 
     <div class="dashboard">
@@ -229,4 +203,3 @@ document.getElementById('username-Container').innerHTML = '<?php echo $_SESSION[
 </script>
 </body>
 </html>
-
