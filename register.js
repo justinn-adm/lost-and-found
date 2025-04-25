@@ -1,11 +1,9 @@
 function usernameCheck(id) {
-	console.log(id);
 	let timer;
 	const input = document.getElementById(id);
 	const statusDisplay = document.getElementById(`${id}-status`);
 	const field = id;
 	statusDisplay.style.display = 'none';
-	console.log('eventListener added');
 
 	input.addEventListener('input', () => {
 
@@ -19,7 +17,6 @@ function usernameCheck(id) {
 		clearTimeout(timer);
 
 		timer = setTimeout(() => {
-			console.log('fetching');
 			fetch('check_username.php', {
 				method: 'POST',
 				headers: {
@@ -29,8 +26,6 @@ function usernameCheck(id) {
 			})
 				.then(res => res.json())
 				.then(data => {
-					console.log(data);
-					console.log(data.value);
 					if (data.available) {
 						input.style.border = '5px solid #19e34f';
 						statusDisplay.style.display = 'none';
