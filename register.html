@@ -84,6 +84,7 @@
       text-decoration: underline;
     }
 
+
     .right-side {
       flex: 1;
       padding: 0;
@@ -108,12 +109,13 @@
       <form method="POST" action="register.php">
         <div class="form-group">
           <label for="user">Username</label>
-          <input type="text" id="user" name="username" placeholder="Enter a Username" required />
+          <input type="text" id="username" name="username" placeholder="Enter a Username"  required />
+            <small id="username-status"></small>
         </div>
         <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" name="email" placeholder="Enter your Email" required />
-
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="Enter your Email" required />
+            <small id="email-status"></small>
         </div>
         <div class="form-group">
           <label for="password">Password</label>
@@ -127,4 +129,7 @@
     </div>
   </div>
 </body>
+  <script src="register.js">
+  
+  </script>
 </html>
