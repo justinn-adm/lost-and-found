@@ -43,24 +43,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['role'] = $user['role'];
 
     
-            $redirectPage = ($user['role'] === 'admin') ? 'dashb.php' : 'feed.html';
+            $redirectPage = ($user['role'] === 'admin') ? 'dashb.php' : 'feed.php';
 
             echo "<script>
                 alert('Login successful! Redirecting...');
                 window.location.href = '$redirectPage';
             </script>";
+            $_SESSION['logged_in'] = true;
             exit();
         } else {
             echo "<script>
                 alert('❌ Invalid Password.');
-                window.location.href = 'index.html';
+                window.location.href = 'login.html';
             </script>";
             exit();
         }
     } else {
         echo "<script>
             alert('❌ Username not found.');
-            window.location.href = 'index.html';
+            window.location.href = 'login.html';
         </script>";
         exit();
     }

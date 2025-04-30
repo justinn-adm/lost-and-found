@@ -1,11 +1,15 @@
 <?php
 
 include 'db.php';
+session_start();
+
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = isset($_POST['username']) ? trim($_POST['username']) : null;
     $email = isset($_POST['email']) ? trim($_POST['email']) : null;
     $password = isset($_POST['password']) ? $_POST['password'] : null;
+    $role = isset($_SESSION['role']) ? $_SESSION['role'] : 'user';
+    echo $role;
 
     if (!empty($username) && !empty($email) && !empty($password)) {
         $username_taken = false;
@@ -41,14 +45,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         } else {
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-            $sql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
+            $sql = "INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, ?)";
             $stmt = $conn->prepare($sql);
 
             if ($stmt) {
-                $stmt->bind_param("sss", $username, $email, $hashed_password);
+                $stmt->bind_param("ssss", $username, $email, $hashed_password, $role);
 
                 if ($stmt->execute()) {
-                    echo "<script>alert('Registration successful!'); window.location.href='index.php';</script>";
+                header('Location: ' . $_SERVER['HTTP_REFERER']);
+                    $_SESSION['submission'] = true;
                 } else {
                     echo "<script>alert('Database error: " . $stmt->error . "');</script>";
                 }

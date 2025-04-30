@@ -4,7 +4,7 @@ include 'db.php';
 session_start();
  
 if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'admin') {
-    header("Location: login.php");
+    header("Location: login.html");
     exit();
 }
 ?>
@@ -107,48 +107,19 @@ if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'admin') {
     header a:hover {
       color: #10b981;
     }
+ iframe {
+            width: 100%;
+            height: 100vh;
+            border: none;
+            transition: transform 0.5s ease-in-out;
+        }
 
-    .dashboard {
-      padding: 30px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-    }
-
-    .card {
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      color: #000;
-    }
-
-    .card h2 {
-      font-size: 2rem;
-      font-weight: 800;
-    }
-
-    .card p {
-      color: #555;
-    }
-
-    .card .more-info {
-      display: block;
-      margin-top: 10px;
-      color: #fff;
-      text-decoration: none;
-    }
-
-    footer {
-      text-align: center;
-      padding: 15px;
-      background-color: #fff;
-      color: #888;
-      font-size: 0.9rem;
-    }
-
-    
+        iframe.show {
+            transform: translateY(0);
+        }    
   </style>
+    <script src="dashb.js">
+    </script>
 </head>
 <body>
   <aside class="sidebar">
@@ -161,43 +132,15 @@ if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'admin') {
       </div>
     </div>
     <nav>
-  <a href="#" class="active"><i class="fas fa-tachometer-alt"></i>🏠 Dashboard</a>
-  <a href="#"><i class="fas fa-briefcase"></i>🕵️‍♂️ Lost and Found Item</a>
-  <a href="#"><i class="fas fa-image"></i>🖼️ Post Images </a>
-  <a href="user_management.php"><i class="fas fa-users-cog"></i>👥 User Management</a>
+  <a href="#" class="active" id="dashboard"><i class="fas fa-tachometer-alt"></i>🏠 Dashboard</a>
+  <a href="#" id="image-dashboard"><i class="fas fa-image"></i> 🖼️ Post Images</a>
+  <a href="#" id="user_management"><i class="fas fa-users-cog"></i>👥 User Management</a>
   <a href="logout.php"><i class="fas fa-power-off"></i>🚪 Logout</a>
 </nav>
 
   </aside>
 
-  <div class="main-content">
-    <div class="topbar">
-      
-     
-    </div>
-
-    <div class="dashboard">
-      <div class="card" style="background-color:#17a2b8; color:white;">
-        <h2></h2>
-        <p>Total Members</p>
-        <a href="#" class="more-info">More info <i class="fas fa-arrow-circle-right"></i></a>
-      </div>
-      <div class="card" style="background-color:#007bff; color:white;">
-        <h2>150</h2>
-        <p>Total Lost Items</p>
-        <a href="#" class="more-info">More info <i class="fas fa-arrow-circle-right"></i></a>
-      </div>
-      <div class="card" style="background-color:#28a745; color:white;">
-        <h2>53</h2>
-        <p>Total Found Items</p>
-        <a href="#" class="more-info">More info <i class="fas fa-arrow-circle-right"></i></a>
-      </div>
-    </div>
-
-    <footer>
-      <strong><a href="#" style="color:#007bff; text-decoration:none;">Lost and Found System</a></strong>.
-    </footer>
-  </div>
+    <iframe src="dashboard.php" class="main-content" id="main-content" style="height:100vh;"></iframe>
 <script>
 document.getElementById('username-Container').innerHTML = '<?php echo $_SESSION["username"]?>';
 </script>

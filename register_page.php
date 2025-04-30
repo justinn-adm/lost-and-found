@@ -1,3 +1,13 @@
+<?php 
+session_start();
+
+if(!empty($_SESSION['submission'])){
+  if($_SESSION['submission']){
+    echo "<script>alert('registration successful')</script>";
+  }
+  unset($_SESSION['submission']);
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -63,6 +73,7 @@
       font-size: 1rem;
       cursor: pointer;
       margin-top: 1rem;
+      transition: opacity 0.5s ease-in;
     }
 
     .btn:hover {
@@ -101,6 +112,9 @@
       display: block;
     }
   </style>
+  <script src="register.js">
+  
+  </script>
 </head>
 <body>
   <div class="login-container">
@@ -121,7 +135,7 @@
           <label for="password">Password</label>
           <input type="password" id="password" name="password" placeholder="Enter your password" required />
         </div>
-        <button type="submit" class="btn">Create</button>
+        <button id="submit-btn" type="submit" class="btn">Create</button>
       </form>
     </div>
     <div class="right-side">
@@ -129,7 +143,4 @@
     </div>
   </div>
 </body>
-  <script src="register.js">
-  
-  </script>
 </html>

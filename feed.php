@@ -1,3 +1,9 @@
+<?php 
+  session_start();
+  if(!isset($_SESSION['logged_in'])){
+  header('Location: index.php');
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -206,7 +212,7 @@
   <div class="sidebar">
     <h1>Welcome to CvSU Naic<br>Lost and Found</h1>
     <nav>
-      <a href="index.html">🔙 Back to Login</a>
+      <a href="logout.php">🔙 Back to Login</a>
       <a href="items.html">📦 View Lost Items</a>
       <a href="post_items.html">📝 Post Lost Items</a>
       <a href="#">📞 Talk to an Admin</a>
