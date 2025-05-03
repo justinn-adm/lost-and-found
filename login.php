@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['role'] = $user['role'];
 
     
-            $redirectPage = ($user['role'] === 'admin') ? 'dashb.php' : 'feed.html';
+            $redirectPage = ($user['role'] === 'admin') ? 'dashb.php' : 'feeds.html';
 
             echo "<script>
                 alert('Login successful! Redirecting...');
