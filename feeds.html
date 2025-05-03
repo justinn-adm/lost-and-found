@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lost and Found</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #ffffff;
+      color: white;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background: #1a1a1a;
+      position: relative;
+      z-index: 1;
+    }
+
+    .navbar-title {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .navbar-title img {
+      width: 80px;
+      height: 50px;
+      object-fit: contain;
+    }
+
+    .navbar-title span {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .menu-icon {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 25px;
+      height: 20px;
+      cursor: pointer;
+      position: relative;
+      z-index: 1;
+    }
+
+    .menu-icon span {
+      height: 3px;
+      background-color: white;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .menu-icon span:first-child {
+      width: 60%;
+      align-self: flex-end;
+    }
+
+    .menu-icon:hover span {
+      width: 100%;
+      background-color: #3b82f6;
+      box-shadow: 0 0 5px #3b82f6, 0 0 10px #3b82f6;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      right: -250px;
+      width: 250px;
+      height: 100%;
+      background-color: #1e293b;
+      box-shadow: -2px 0 10px rgba(0, 0, 0, 0.5);
+      padding-top: 80px;
+      padding-left: 20px;
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transition: right 0.4s ease, opacity 0.3s ease;
+    }
+
+    .sidebar.open {
+      right: 0;
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .sidebar a {
+      display: flex;
+      align-items: center;
+      padding: 12px 20px;
+      color: white;
+      text-decoration: none;
+      font-weight: normal;
+      transition: background 0.3s ease;
+      border-radius: 8px;
+      margin: 10px 0;
+      width: 200px;
+      justify-content: flex-start;
+    }
+
+    .sidebar a:hover {
+      background-color: #374151;
+    }
+
+    .sidebar a.active {
+      background-color: #6e9cff;
+      color: white;
+    }
+
+    .sidebar i {
+      margin-right: 12px;
+      font-size: 1.2rem;
+    }
+
+    .sidebar a span {
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .navbar-title {
+        margin-bottom: 10px;
+      }
+
+      .menu-icon {
+        align-self: flex-end;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="navbar-title">
+      <span>
+        <strong style="display: block; font-size: 1.8rem;">CvSU</strong>
+        <span style="display: block; font-size: 1.1rem;">NAIC</span>
+      </span>
+      <img src="images/logo.png" alt="CvSU Logo">
+    </div>
+    <div class="menu-icon" onclick="toggleSidebar()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </header>
+
+  <div class="sidebar" id="sidebar">
+    <a href="#" class="active">
+      <span>🏠 Home</span>
+    </a>
+    <a href="post_items.html">
+      <span>🖼️ Post Images</span>
+    </a>
+    <a href="items.html">
+      <span>📦 View Items</span>
+    </a>
+    <a href="#">
+      <span>💬 Talk to an Admin</span>
+    </a>
+    <a href="index.html">
+      <span>🚪 Logout</span>
+    </a>
+  </div>
+
+  <script>
+    const sidebar = document.getElementById('sidebar');
+
+    function toggleSidebar() {
+      sidebar.classList.toggle('open');
+    }
+
+    document.addEventListener('click', function (e) {
+      const isClickInside = sidebar.contains(e.target) || e.target.closest('.menu-icon');
+      if (!isClickInside) {
+        sidebar.classList.remove('open');
+      }
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        sidebar.classList.remove('open');
+      }
+    });
+  </script>
+
+</body>
+</html>
