@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login & Register</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #8e44ad, #3498db);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      width: 400px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      padding: 2rem;
+    }
+
+    .tab-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .tab-buttons button {
+      flex: 1;
+      padding: 0.75rem;
+      cursor: pointer;
+      border: none;
+      background: #dcdcdc;
+      color: #333;
+      font-weight: bold;
+      border-radius: 6px;
+      margin-right: 0.5rem;
+    }
+
+    .tab-buttons .active {
+      background: #000;
+      color: #fff;
+    }
+
+    .tab-buttons button:last-child {
+      margin-right: 0;
+    }
+
+    .form-container {
+      display: none;
+    }
+
+    .form-container.active {
+      display: block;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin-top: 0.5rem;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 0.75rem;
+      background-color: #000;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      border-radius: 6px;
+      font-weight: bold;
+      margin-top: 1rem;
+    }
+
+    .submit-btn:hover {
+      background-color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="tab-buttons">
+      <button onclick="toggleForm('login')" class="active" id="loginTab">Sign In</button>
+      <button onclick="toggleForm('register')" id="registerTab">Sign Up</button>
+    </div>
+
+    <div class="form-container active" id="login">
+      <h2>Sign In</h2>
+      <form method="POST" action="login.php">
+        <div class="form-group">
+          <input type="text" name="username" placeholder="Username" required />
+        </div>
+        <div class="form-group">
+          <input type="password" name="password" placeholder="Password" required />
+        </div>
+        <button type="submit" class="submit-btn">Sign In</button>
+      </form>
+    </div>
+
+    <div class="form-container" id="register">
+      <h2>Sign Up</h2>
+      <form method="POST" action="register.php">
+        <div class="form-group">
+          <input type="text" name="username" placeholder="Username" required />
+        </div>
+        <div class="form-group">
+          <input type="email" name="email" placeholder="Email Address" required />
+        </div>
+        <div class="form-group">
+          <input type="password" name="password" placeholder="Password" required />
+        </div>
+        <div class="form-group">
+          <label for="gender">Gender</label>
+          <select name="gender" id="gender" required onchange="setProfileImage()">
+            <option value="">Select Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+        <input type="hidden" name="profile_img" id="profile_img" value="">
+        <button type="submit" class="submit-btn">Sign Up</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function toggleForm(form) {
+      document.getElementById('login').classList.remove('active');
+      document.getElementById('register').classList.remove('active');
+      document.getElementById('loginTab').classList.remove('active');
+      document.getElementById('registerTab').classList.remove('active');
+
+      document.getElementById(form).classList.add('active');
+      document.getElementById(form + 'Tab').classList.add('active');
+    }
+
+    function setProfileImage() {
+      const gender = document.getElementById("gender").value;
+      const profileImgInput = document.getElementById("profile_img");
+      if (gender === "male") {
+        profileImgInput.value = "boy.jfif";
+      } else if (gender === "female") {
+        profileImgInput.value = "girl.jfif";
+      } else {
+        profileImgInput.value = "";
+      }
+    }
+  </script>
+</body>
+</html>
