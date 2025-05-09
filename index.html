@@ -77,8 +77,6 @@
       .nav-links a {
         margin: 5px 0;
       }
-
-    
     }
 
     .main-container {
@@ -150,13 +148,22 @@
       box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
       transition: all 0.3s ease;
       cursor: pointer;
-      animation: fadeInUp 1s ease forwards;
+      animation: bounce 2s infinite;
     }
 
     .login-button:hover {
       transform: translateY(-3px);
       box-shadow: 0 12px 30px rgba(37, 99, 235, 0.6);
       background: linear-gradient(to right, #2563eb, #1d4ed8);
+    }
+
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
     }
 
     .right-aligned-text {
@@ -176,6 +183,7 @@
       <span><strong style="display: block; font-size: 1.8rem;">Lost and Found</strong><span style="display: block; font-size: 1.1rem;">CvSU NAIC</span></span>
     </div>
     <nav class="nav-links">
+      <a href="anlala.html">About Us</a>
       <a href="login.html">FAQ</a>
     </nav>
   </header>
@@ -188,11 +196,10 @@
       </h1>
       <p class="tagline">Lost something? </p>
       <p class="tagline1">Let the campus help you get it back.</p>
-      <a href="login.html">
+      <a href="SignIn_SignUp.html">
         <button class="login-button">Log in</button>
       </a>
     </div>
-   
   </div>
 
   <script>
@@ -204,10 +211,10 @@
       ["Reclaim Your", "Belongings?"],
       ["Help Us Return", "Items!"]
     ];
-  
+
     const typingBox = document.getElementById("typingText");
     let index = 0;
-  
+
     function updateTypingText() {
       const [line1, line2] = phrases[index];
       typingBox.innerHTML = `<span>${line1}</span><span>${line2}</span>`;
@@ -220,10 +227,10 @@
       });
       index = (index + 1) % phrases.length;
     }
-  
+
     updateTypingText();
     setInterval(updateTypingText, 2800);
   </script>
-  
+
 </body>
 </html>
