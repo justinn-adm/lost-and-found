@@ -4,11 +4,7 @@ error_reporting(E_ALL);
 include 'db.php';
 session_start();
 
-$adminUsername = 'JIAN';
-$adminPassword = '12345';
-$adminEmail = 'jian@example.com';
-$adminRole = 'admin';
-$adminImage = '';
+
 
 $sqlCheck = "SELECT * FROM users WHERE username = ?";
 $stmtCheck = $conn->prepare($sqlCheck);
@@ -16,7 +12,6 @@ $stmtCheck->bind_param("s", $adminUsername);
 $stmtCheck->execute();
 $resultCheck = $stmtCheck->get_result();
 
-    
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username_input = trim($_POST['username'] ?? '');
     $password_input = $_POST['password'] ?? '';
@@ -39,14 +34,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $user = $result->fetch_assoc();
 
         if (password_verify($password_input, $user['password'])) {
+            $_SESSION['user_id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
             $_SESSION['role'] = $user['role'];
 
-    
-            $redirectPage = ($user['role'] === 'admin') ? 'dashb.php' : 'feeds.html';
+            $redirectPage = ($user['role'] === 'admin') ? 'dashb1.php' : 'lost.php';
+            $username = $user['username'];
 
             echo "<script>
-                alert('Login successful! Redirecting...');
+                alert('Welcome $username!');
                 window.location.href = '$redirectPage';
             </script>";
             exit();
