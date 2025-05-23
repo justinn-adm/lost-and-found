@@ -7,52 +7,45 @@
   <style>
     body {
       margin: 0;
-      padding: 0;
-      background: linear-gradient(135deg, #8e44ad, #3498db);
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f4f4f4;
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
       height: 100vh;
     }
 
     .container {
-      width: 400px;
-      background: #fff;
+      width: 360px;
+      background: white;
       border-radius: 12px;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-      padding: 2rem;
+      overflow: hidden;
     }
 
     .tab-buttons {
       display: flex;
-      justify-content: space-between;
-      margin-bottom: 1rem;
     }
 
     .tab-buttons button {
       flex: 1;
-      padding: 0.75rem;
-      cursor: pointer;
+      padding: 1rem;
       border: none;
-      background: #dcdcdc;
-      color: #333;
-      font-weight: bold;
-      border-radius: 6px;
-      margin-right: 0.5rem;
+      background: #f1f1f1;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s;
     }
 
     .tab-buttons .active {
-      background: #000;
-      color: #fff;
-    }
-
-    .tab-buttons button:last-child {
-      margin-right: 0;
+      background: #333;
+      color: white;
     }
 
     .form-container {
+      padding: 2rem;
       display: none;
+      animation: fadeIn 0.4s ease-in-out;
     }
 
     .form-container.active {
@@ -60,43 +53,54 @@
     }
 
     .form-group {
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
     }
 
-    .form-group input, .form-group select {
+    .form-group input,
+    .form-group select {
       width: 100%;
       padding: 0.75rem;
       border: 1px solid #ccc;
       border-radius: 6px;
-      margin-top: 0.5rem;
+      font-size: 1rem;
     }
 
     .submit-btn {
       width: 100%;
       padding: 0.75rem;
-      background-color: #000;
-      color: #fff;
+      background: #333;
+      color: white;
       border: none;
-      cursor: pointer;
       border-radius: 6px;
       font-weight: bold;
-      margin-top: 1rem;
+      cursor: pointer;
+      transition: background 0.3s;
     }
 
     .submit-btn:hover {
-      background-color: #333;
+      background: #555;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="tab-buttons">
-      <button onclick="toggleForm('login')" class="active" id="loginTab">Sign In</button>
+      <button onclick="toggleForm('login')" id="loginTab" class="active">Sign In</button>
       <button onclick="toggleForm('register')" id="registerTab">Sign Up</button>
     </div>
 
     <div class="form-container active" id="login">
-      <h2>Sign In</h2>
       <form method="POST" action="login.php">
         <div class="form-group">
           <input type="text" name="username" placeholder="Username" required />
@@ -109,8 +113,7 @@
     </div>
 
     <div class="form-container" id="register">
-      <h2>Sign Up</h2>
-      <form method="POST" action="register.php">
+      <form method="POST" action="SignUp.php">
         <div class="form-group">
           <input type="text" name="username" placeholder="Username" required />
         </div>
@@ -121,7 +124,6 @@
           <input type="password" name="password" placeholder="Password" required />
         </div>
         <div class="form-group">
-          <label for="gender">Gender</label>
           <select name="gender" id="gender" required onchange="setProfileImage()">
             <option value="">Select Gender</option>
             <option value="male">Male</option>
