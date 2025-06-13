@@ -20,6 +20,12 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      overflow-x: hidden;
+      overflow-y: hidden;
+    }
+
+    body.loaded {
+      overflow-y: auto;
     }
 
     header {
@@ -29,6 +35,14 @@
       padding: 20px 40px;
       background: rgba(12, 43, 106, 0.459);
       flex-wrap: wrap;
+      transform: translateY(-100%);
+      animation: slideDown 1s ease forwards;
+    }
+
+    @keyframes slideDown {
+      to {
+        transform: translateY(0);
+      }
     }
 
     .navbar-title {
@@ -47,6 +61,12 @@
       font-size: 1.5rem;
       font-weight: 800;
       color: #ffffff;
+    }
+
+    .nav-links {
+      display: flex;
+      justify-content: flex-end;
+      flex: 1;
     }
 
     .nav-links a {
@@ -89,6 +109,17 @@
 
     .typing-box {
       font-family: 'Poppins', sans-serif;
+      transform: translateY(50px);
+      opacity: 0;
+      animation: fadeInUpBody 1s ease forwards;
+      animation-delay: 1s;
+    }
+
+    @keyframes fadeInUpBody {
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
     }
 
     .typing-box h1 {
@@ -127,12 +158,6 @@
       font-weight: 600;
       font-style: italic;
       color: #000000;
-    }
-
-    .nav-links {
-      display: flex;
-      justify-content: flex-end;
-      flex: 1;
     }
 
     .login-button {
@@ -176,14 +201,13 @@
   </style>
 </head>
 <body>
-
   <header>
     <div class="navbar-title">
       <img src="images/logo.png" alt="CvSU Logo">
       <span><strong style="display: block; font-size: 1.8rem;">Lost and Found</strong><span style="display: block; font-size: 1.1rem;">CvSU NAIC</span></span>
     </div>
     <nav class="nav-links">
-      <a href="about  .html">About Us</a>
+      <a href="about.html">About Us</a>
       <a href="login.html">FAQ</a>
     </nav>
   </header>
@@ -194,7 +218,7 @@
         <span>Looking For</span>
         <span>Something?</span>
       </h1>
-      <p class="tagline">Lost something? </p>
+      <p class="tagline">Lost something?</p>
       <p class="tagline1">Let the campus help you get it back.</p>
       <a href="SignIn_SignUp.html">
         <button class="login-button">Log in</button>
@@ -203,6 +227,12 @@
   </div>
 
   <script>
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.body.classList.add('loaded');
+      }, 2000);
+    });
+
     const phrases = [
       ["Looking For", "Something?"],
       ["Lost an", "Item?"],
@@ -231,6 +261,5 @@
     updateTypingText();
     setInterval(updateTypingText, 2800);
   </script>
-
 </body>
 </html>
