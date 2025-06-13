@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt = $conn->prepare("INSERT INTO users (username, email, password, gender, profile_img) VALUES (?, ?, ?, ?, ?)");
             $stmt->bind_param("sssss", $username, $email, $hashed_password, $gender, $profile_img);
             if ($stmt->execute()) {
-                echo "<script>alert('Registration successful!'); window.location.href='login.html';</script>";
+                echo "<script>alert('Registration successful!'); window.location.href='SignIn_SignUp.html';</script>";
             } else {
                 echo "<script>alert('Error: " . $stmt->error . "');</script>";
             }
