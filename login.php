@@ -4,14 +4,6 @@ error_reporting(E_ALL);
 include 'db.php';
 session_start();
 
-
-
-$sqlCheck = "SELECT * FROM users WHERE username = ?";
-$stmtCheck = $conn->prepare($sqlCheck);
-$stmtCheck->bind_param("s", $adminUsername);
-$stmtCheck->execute();
-$resultCheck = $stmtCheck->get_result();
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username_input = trim($_POST['username'] ?? '');
     $password_input = $_POST['password'] ?? '';
@@ -41,10 +33,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $redirectPage = ($user['role'] === 'admin') ? 'dashb1.php' : 'lost.php';
             $username = $user['username'];
 
-            echo "<script>
-                alert('Welcome $username!');
-                window.location.href = '$redirectPage';
-            </script>";
+            if ($user['role'] === 'admin') {
+                echo "<script>
+                    alert('Welcome Admin $username!');
+                    window.location.href = '$redirectPage';
+                </script>";
+            } else {
+                echo "<script>
+                    alert('Welcome $username!');
+                    window.location.href = '$redirectPage';
+                </script>";
+            }
             exit();
         } else {
             echo "<script>
