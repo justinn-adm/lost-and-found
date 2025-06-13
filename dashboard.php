@@ -75,17 +75,17 @@ $total_items = $stmt->num_rows;
       <div class="card" style="background-color:#17a2b8; color:white;">
 <h2><?php echo $users ?></h2>
         <p>Total Members</p>
-        <a href="#" class="more-info">More info <i class="fas fa-arrow-circle-right"></i></a>
+       
       </div>
       <div class="card" style="background-color:#007bff; color:white;">
 <h2><?php echo $total_items ?></h2>
         <p>Total Lost Items</p>
-        <a href="#" class="more-info">More info <i class="fas fa-arrow-circle-right"></i></a>
+  
       </div>
       <div class="card" style="background-color:#28a745; color:white;">
         <h2>53</h2>
         <p>Total Found Items</p>
-        <a href="#" class="more-info">More info <i class="fas fa-arrow-circle-right"></i></a>
+       
       </div>
     </div>
 
