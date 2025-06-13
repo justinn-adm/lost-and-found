@@ -3,83 +3,133 @@
 <head>
   <meta charset="UTF-8">
   <title>Post Lost Item - CvSU Naic</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@800&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Poppins:wght@600&display=swap" rel="stylesheet">
   <style>
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+
     body {
       font-family: 'Inter', sans-serif;
-      background: linear-gradient(to bottom right, #f0f4f3, #e9f7f1);
-      background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
-      padding: 40px;
-      margin: 0;
+      background: linear-gradient(to bottom right, #0c2b6a, #0c2b6ad0), url('casn.jpg') no-repeat center/cover;
+      color: #f9f9f9;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 60px 20px;
     }
 
     .header {
       text-align: center;
-      margin-bottom: 30px;
+      margin-bottom: 40px;
     }
 
     .header h2 {
-      font-size: 28px;
-      color: #004225;
+      font-family: 'Poppins', sans-serif;
+      font-size: 32px;
+      color: #10b981;
     }
 
     .header p {
       font-family: 'Playfair Display', serif;
       font-size: 18px;
-      color: #333;
+      color: #ddd;
+      margin-top: 10px;
     }
 
-    .post-section {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
-      max-width: 700px;
+    .post-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 30px;
       width: 100%;
-      margin: 0 auto;
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      max-width: 600px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+      backdrop-filter: blur(10px);
     }
 
-    .post-section input[type="file"],
-    .post-section input[type="text"],
-    .post-section input[type="date"],
-    .post-section textarea {
-      padding: 12px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
+    .file-upload {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .file-upload button {
+      padding: 12px 20px;
+      background: #10b981;
+      border: none;
+      border-radius: 10px;
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .file-upload button:hover {
+      background: #0e9c6e;
+      transform: translateY(-2px);
+    }
+
+    .file-upload #fileName {
+      font-size: 14px;
+      color: #ddd;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 250px;
+    }
+
+    .post-card input[type="text"],
+    .post-card input[type="date"],
+    .post-card textarea {
+      width: 100%;
+      margin-bottom: 20px;
+      padding: 15px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.05);
+      color: #f9f9f9;
       font-size: 16px;
-      flex: 1 1 100%;
     }
 
-    .post-section textarea {
+    .post-card textarea {
       resize: vertical;
+      min-height: 80px;
     }
 
     .anon-option {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
+      margin-bottom: 20px;
       font-size: 15px;
-      flex: 1 1 100%;
     }
 
-    .post-section button {
-      padding: 12px 20px;
-      background-color: #2ecc71;
-      color: white;
+    .anon-option input[type="checkbox"] {
+      transform: scale(1.2);
+    }
+
+    .post-card button.post-btn {
+      width: 100%;
+      padding: 15px;
+      background: #10b981;
       border: none;
-      border-radius: 8px;
-      font-size: 16px;
+      border-radius: 10px;
       font-weight: bold;
+      font-size: 16px;
+      color: #fff;
       cursor: pointer;
-      transition: background-color 0.2s ease;
+      transition: background 0.3s ease;
     }
 
-    .post-section button:hover {
-      background-color: #27ae60;
+    .post-card button.post-btn:hover {
+      background: #0e9c6e;
+    }
+
+    ::placeholder {
+      color: #ddd;
     }
   </style>
 </head>
@@ -90,23 +140,40 @@
     <p>Fill in the details to help someone find their lost belongings.</p>
   </div>
 
-  <div class="post-section">
-    <input type="file" id="imageInput" accept="image/*">
+  <div class="post-card">
+    <div class="file-upload">
+      <input type="file" id="imageInput" accept="image/*" hidden>
+      <button type="button" id="customFileButton">Choose Image</button>
+      <span id="fileName">No file chosen</span>
+    </div>
     <input type="text" id="itemLabel" placeholder="Item Name (e.g. Umbrella)">
     <input type="date" id="itemDate">
     <input type="text" id="itemLocation" placeholder="Location (e.g. Building 2)">
-    <textarea id="itemDescription" rows="2" placeholder="Short description..."></textarea>
-
-   
+    <textarea id="itemDescription" placeholder="Short description..."></textarea>
     <label class="anon-option">
       <input type="checkbox" id="anonymousCheckbox">
       Post Anonymously
     </label>
-
-    <button onclick="addLostItem()">POST</button>
+    <button class="post-btn" onclick="addLostItem()">POST</button>
   </div>
 
   <script>
+    const realFileInput = document.getElementById('imageInput');
+    const customButton = document.getElementById('customFileButton');
+    const fileName = document.getElementById('fileName');
+
+    customButton.addEventListener('click', () => {
+      realFileInput.click();
+    });
+
+    realFileInput.addEventListener('change', () => {
+      if (realFileInput.files[0]) {
+        fileName.textContent = realFileInput.files[0].name;
+      } else {
+        fileName.textContent = "No file chosen";
+      }
+    });
+
     function addLostItem() {
       const input = document.getElementById('imageInput');
       const label = document.getElementById('itemLabel').value.trim();
@@ -124,7 +191,7 @@
       formData.append('date', date);
       formData.append('location', location);
       formData.append('description', description);
-      formData.append('anonymous', anonymous); 
+      formData.append('anonymous', anonymous);
 
       fetch('upload.php', {
         method: 'POST',
@@ -134,15 +201,14 @@
       .then(result => {
         if (result === "success") {
           alert("Item posted successfully!");
-        
         } else {
           alert("Failed to upload. Server said: " + result);
         }
       })
       .catch(error => console.error('Upload error:', error));
 
-     
       input.value = '';
+      fileName.textContent = "No file chosen";
       document.getElementById('itemLabel').value = '';
       document.getElementById('itemDate').value = '';
       document.getElementById('itemLocation').value = '';
