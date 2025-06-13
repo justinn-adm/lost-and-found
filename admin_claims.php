@@ -2,13 +2,13 @@
 include 'db.php';
 session_start();
 
-// Admin-only check
+
 if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'admin') {
     header("Location: login.php");
     exit();
 }
 
-// Fetch all claims with item info
+
 $sql = "
     SELECT 
         claims.id AS claim_id,
