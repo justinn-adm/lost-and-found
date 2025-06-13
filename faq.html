@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>FAQ - CvSU Naic Lost and Found</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Luckiest+Guy&family=Poppins:wght@600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(to bottom right, #0c2b6a, #0c2b6ad0), url('casn.jpg') no-repeat center/cover;
+      color: #f9f9f9;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-y: scroll;
+    }
+
+    header {
+      background: rgba(12, 43, 106, 0.8);
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand img {
+      width: 70px;
+      height: auto;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      margin-left: 20px;
+      font-weight: 600;
+      transition: color 0.2s ease;
+    }
+
+    nav a:hover {
+      color: #10b981;
+    }
+
+    main {
+      flex: 1;
+      padding: 60px 10%;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .faq-item {
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 25px 30px;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+      opacity: 0;
+      transform: translateY(50px);
+      animation: fadeInUp 1s forwards;
+      overflow: hidden;
+    }
+
+    .faq-item:nth-child(1) { animation-delay: 0.2s; }
+    .faq-item:nth-child(2) { animation-delay: 0.4s; }
+    .faq-item:nth-child(3) { animation-delay: 0.6s; }
+    .faq-item:nth-child(4) { animation-delay: 0.8s; }
+
+    .faq-item:hover {
+      border-color: #10b981;
+      box-shadow: 0 15px 30px rgba(16, 185, 129, 0.3);
+      transform: translateY(-5px) scale(1.02);
+    }
+
+    .faq-item summary {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: #10b981;
+      list-style: none;
+      position: relative;
+      padding-right: 30px;
+    }
+
+    .faq-item summary::after {
+      content: '+';
+      position: absolute;
+      right: 0;
+      font-size: 1.5rem;
+      transition: transform 0.3s ease;
+    }
+
+    .faq-item[open] summary::after {
+      transform: rotate(45deg);
+    }
+
+    .faq-item p {
+      margin-top: 10px;
+      line-height: 1.6;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease, opacity 0.5s ease;
+      opacity: 0;
+    }
+
+    .faq-item[open] p {
+      max-height: 200px;
+      opacity: 1;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: rgba(12, 43, 106, 0.8);
+      font-size: 0.85rem;
+    }
+
+    #backToTop {
+      position: fixed;
+      bottom: 40px;
+      right: 40px;
+      background: #10b981;
+      color: #fff;
+      border: none;
+      padding: 12px 18px;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 1rem;
+      box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+    }
+
+    #backToTop.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    #backToTop:hover {
+      background: #0f766e;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 600px) {
+      header, nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      nav {
+        margin-top: 10px;
+      }
+
+      nav a {
+        margin: 5px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand">
+      <img src="images/logo.png" alt="CvSU Logo">
+    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="faq.html">FAQ</a>
+    </nav>
+  </header>
+
+  <main>
+    <details class="faq-item">
+      <summary>How do I report a lost item?</summary>
+      <p>Sign in and click on "Report Item". Fill in all the details about the item and submit the form. Our team will assist you.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>How can I claim a found item?</summary>
+      <p>Check our list of found items on the website. If you see yours, click "Claim" and provide proof of ownership to verify your claim.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Is there any fee for using the Lost and Found service?</summary>
+      <p>No, the CvSU Naic Lost and Found service is free for all students and staff.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>How long are unclaimed items kept?</summary>
+      <p>Items are securely stored for up to 90 days. After that, they may be donated or properly disposed of.</p>
+    </details>
+  </main>
+
+  <button id="backToTop">↑ Top</button>
+
+  <footer>
+    &copy; 2025 CvSU Naic Lost and Found. All rights reserved.
+  </footer>
+
+  <script>
+    const items = document.querySelectorAll('.faq-item');
+    items.forEach(item => {
+      item.addEventListener('toggle', () => {
+        if (item.open) {
+          items.forEach(other => {
+            if (other !== item && other.open) {
+              other.open = false;
+            }
+          });
+        }
+      });
+    });
+
+    const backToTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 200) {
+        backToTop.classList.add('show');
+      } else {
+        backToTop.classList.remove('show');
+      }
+    });
+
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+  </script>
+
+</body>
+</html>
