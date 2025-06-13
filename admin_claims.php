@@ -25,7 +25,6 @@ $sql = "
 ";
 
 $result = $conn->query($sql);
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,36 +33,82 @@ $result = $conn->query($sql);
     <title>Manage Claims</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            padding: 30px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: #f4f6f9;
+            margin: 0;
+            padding: 40px;
         }
-        table {
-            border-collapse: collapse;
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .claims-table {
             width: 100%;
-            margin-top: 20px;
+            border-collapse: collapse;
+            margin-top: 30px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
         }
-        th, td {
+
+        .claims-table th,
+        .claims-table td {
             border: 1px solid #ddd;
-            padding: 10px;
+            padding: 12px 15px;
             text-align: center;
         }
-        th {
-            background: #007bff;
+
+        .claims-table th {
+            background-color: #007bff;
             color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
+
+        .claims-table tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
         .btn {
-            padding: 6px 12px;
+            padding: 8px 16px;
             border: none;
-            cursor: pointer;
             border-radius: 4px;
             color: #fff;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.2s ease-in-out;
         }
-        .approve {
+
+        .btn.approve {
             background: #28a745;
         }
-        .reject {
+
+        .btn.approve:hover {
+            background: #218838;
+        }
+
+        .btn.reject {
             background: #dc3545;
+        }
+
+        .btn.reject:hover {
+            background: #c82333;
+        }
+
+        .actions form {
+            display: inline-block;
+        }
+
+        @media (max-width: 768px) {
+            .claims-table {
+                font-size: 0.9rem;
+            }
+
+            .btn {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
         }
     </style>
 </head>
@@ -71,38 +116,48 @@ $result = $conn->query($sql);
 
     <h1>Manage Claims</h1>
 
-    <table>
-        <tr>
-            <th>Claim ID</th>
-            <th>Item</th>
-            <th>Claimant</th>
-            <th>Message</th>
-            <th>Status</th>
-            <th>Action</th>
-        </tr>
-        <?php while($row = $result->fetch_assoc()): ?>
+    <table class="claims-table">
+        <thead>
             <tr>
-                <td><?php echo $row['claim_id']; ?></td>
-                <td><?php echo htmlspecialchars($row['item_name']); ?></td>
-                <td><?php echo htmlspecialchars($row['claimant_name']); ?></td>
-                <td><?php echo htmlspecialchars($row['message']); ?></td>
-                <td><?php echo htmlspecialchars($row['status']); ?></td>
-                <td>
-                    <?php if (strtolower($row['status']) === 'pending'): ?>
-                        <form method="POST" action="approve_claim.php" style="display:inline;">
-                            <input type="hidden" name="claim_id" value="<?php echo $row['claim_id']; ?>">
-                            <button type="submit" class="btn approve">Approve</button>
-                        </form>
-                        <form method="POST" action="reject_claim.php" style="display:inline;">
-                            <input type="hidden" name="claim_id" value="<?php echo $row['claim_id']; ?>">
-                            <button type="submit" class="btn reject">Reject</button>
-                        </form>
-                    <?php else: ?>
-                        <em><?php echo htmlspecialchars($row['status']); ?></em>
-                    <?php endif; ?>
-                </td>
+                <th>Claim ID</th>
+                <th>Item</th>
+                <th>Claimant</th>
+                <th>Message</th>
+                <th>Status</th>
+                <th>Action</th>
             </tr>
-        <?php endwhile; ?>
+        </thead>
+        <tbody>
+            <?php if ($result->num_rows > 0): ?>
+                <?php while ($row = $result->fetch_assoc()): ?>
+                    <tr>
+                        <td><?= $row['claim_id']; ?></td>
+                        <td><?= htmlspecialchars($row['item_name']); ?></td>
+                        <td><?= htmlspecialchars($row['claimant_name']); ?></td>
+                        <td><?= nl2br(htmlspecialchars($row['message'])); ?></td>
+                        <td><?= htmlspecialchars($row['status']); ?></td>
+                        <td class="actions">
+                            <?php if (strtolower($row['status']) === 'pending'): ?>
+                                <form method="POST" action="approve_claim.php">
+                                    <input type="hidden" name="claim_id" value="<?= $row['claim_id']; ?>">
+                                    <button type="submit" class="btn approve">Approve</button>
+                                </form>
+                                <form method="POST" action="reject_claim.php">
+                                    <input type="hidden" name="claim_id" value="<?= $row['claim_id']; ?>">
+                                    <button type="submit" class="btn reject">Reject</button>
+                                </form>
+                            <?php else: ?>
+                                <em><?= htmlspecialchars(ucfirst($row['status'])); ?></em>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                <?php endwhile; ?>
+            <?php else: ?>
+                <tr>
+                    <td colspan="6">No claims found.</td>
+                </tr>
+            <?php endif; ?>
+        </tbody>
     </table>
 
 </body>
