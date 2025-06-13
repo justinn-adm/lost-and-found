@@ -11,16 +11,17 @@
 
     body {
       font-family: 'Inter', sans-serif;
-      background: linear-gradient(to bottom right, #0c2b6a, #0c2b6ad0), url('casn.jpg') no-repeat center/cover;
-      color: #f9f9f9;
+      background: linear-gradient(135deg, #0c2b6a, #0c2b6ad0), url('casn.jpg') no-repeat center/cover;
+      color: #f0f4f8;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      backdrop-filter: blur(4px);
     }
 
     header {
-      background: rgba(12, 43, 106, 0.8);
-      padding: 20px 40px;
+      background: rgba(12, 43, 106, 0.85);
+      padding: 20px 50px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -29,38 +30,58 @@
     .brand img {
       width: 70px;
       height: auto;
+      filter: drop-shadow(0 2px 5px rgba(0,0,0,0.3));
     }
 
     nav a {
       color: #fff;
       text-decoration: none;
-      margin-left: 20px;
+      margin-left: 25px;
       font-weight: 600;
-      transition: color 0.2s ease;
+      font-size: 1rem;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    nav a::after {
+      content: "";
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background: #10b981;
+      transition: width 0.3s ease;
     }
 
     nav a:hover {
       color: #10b981;
     }
 
+    nav a:hover::after {
+      width: 100%;
+    }
+
     main {
       flex: 1;
-      padding: 60px 10%;
+      padding: 80px 10% 60px;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 40px;
+      gap: 50px;
     }
 
     .member {
-      background: rgba(255, 255, 255, 0.05);
-      border: 2px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.07);
+      border: 2px solid rgba(255, 255, 255, 0.15);
       border-radius: 20px;
-      padding: 30px;
+      padding: 35px;
       text-align: center;
-      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+      transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease, backdrop-filter 0.4s ease;
+      backdrop-filter: blur(10px);
       opacity: 0;
-      transform: translateY(50px);
-      animation: fadeInUp 1s forwards;
+      transform: translateY(60px);
+      animation: fadeInUp 1.2s forwards;
+      position: relative;
     }
 
     .member:nth-child(1) { animation-delay: 0.2s; }
@@ -68,9 +89,10 @@
     .member:nth-child(3) { animation-delay: 0.6s; }
 
     .member:hover {
-      transform: translateY(-8px);
+      transform: translateY(-10px) scale(1.03);
       border-color: #10b981;
-      box-shadow: 0 12px 25px rgba(16, 185, 129, 0.2);
+      box-shadow: 0 20px 50px rgba(16, 185, 129, 0.25);
+      backdrop-filter: blur(15px);
     }
 
     .member img {
@@ -78,27 +100,45 @@
       height: 150px;
       border-radius: 50%;
       object-fit: cover;
-      margin-bottom: 20px;
+      margin-bottom: 25px;
       border: 4px solid #10b981;
+      transition: transform 0.4s ease;
+    }
+
+    .member:hover img {
+      transform: scale(1.05) rotate(2deg);
     }
 
     .member h2 {
       font-family: 'Poppins', sans-serif;
-      font-size: 1.5rem;
-      margin-bottom: 10px;
+      font-size: 1.6rem;
+      margin-bottom: 12px;
       color: #10b981;
     }
 
     .member p {
-      line-height: 1.6;
+      line-height: 1.7;
+      font-size: 1rem;
+      color: #e0e6ed;
+      margin-bottom: 15px;
+    }
+
+    .contact-number {
+      font-weight: bold;
+      color: #f0f4f8;
+      background: rgba(16, 185, 129, 0.2);
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 20px;
       font-size: 0.95rem;
     }
 
     footer {
       text-align: center;
-      padding: 20px;
-      background: rgba(12, 43, 106, 0.8);
-      font-size: 0.85rem;
+      padding: 25px;
+      background: rgba(12, 43, 106, 0.85);
+      font-size: 0.9rem;
+      color: #d0d8e0;
     }
 
     @keyframes fadeInUp {
@@ -108,7 +148,7 @@
       }
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 700px) {
       header, nav {
         flex-direction: column;
         align-items: flex-start;
@@ -139,19 +179,22 @@
 
   <main>
     <div class="member">
-      <img src="tin.jpg" alt="Team Member 1">
+      <img src="tin.jpg" alt="Justinn Modrigo">
       <h2>Justinn Modrigo</h2>
-      <p>Justinn is our front-end specialist with 5 years of experience crafting clean, responsive designs. He loves turning ideas into interactive web pages.</p>
+      <p>Justinn is our front-end specialist with 2 years of experience crafting clean, responsive designs. He loves turning ideas into interactive web pages.</p>
+      <div class="contact-number">Contact: 0970 850 6091</div>
     </div>
     <div class="member">
-      <img src="carl.jpg" alt="Team Member 2">
+      <img src="carl.jpg" alt="Carl Datan">
       <h2>Carl Datan</h2>
       <p>Carl handles back-end systems and databases. With a strong focus on security and performance, he keeps our platform robust and reliable.</p>
+      <div class="contact-number">Contact: 09987654321</div>
     </div>
     <div class="member">
-      <img src="kris.jpg" alt="Team Member 3">
+      <img src="kris.jpg" alt="Kris Jan Shingo">
       <h2>Kris Jan Shingo</h2>
       <p>Shingo is our project coordinator and tester. He ensures smooth workflows, quality checks, and excellent user experience for everyone.</p>
+      <div class="contact-number">Contact: 09011223344</div>
     </div>
   </main>
 
