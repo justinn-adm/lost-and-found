@@ -172,9 +172,9 @@ $stmt->close();
 
   <div class="right-top">
     <div class="nav-links">
-      <a href="post_items.html"><i class="fas fa-search"></i> Report Lost</a>
+      <a href="post_items.html"><i class="fas fa-search"></i> Report Items</a>
       <a href="my_claims.php"><i class="fas fa-clipboard-check"></i> My Claims</a>
-      <a href="items.php"><i class="fas fa-list"></i> View Posts</a>
+      <a href="items.php"><i class="fas fa-list"></i> View Items</a>
     </div>
     <div class="profile-icon" onclick="toggleSidebar()">
       <img src="images/<?php echo htmlspecialchars($profile_image); ?>" alt="Profile" />
