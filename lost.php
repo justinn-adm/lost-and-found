@@ -173,7 +173,7 @@ $stmt->close();
   <div class="right-top">
     <div class="nav-links">
       <a href="post_items.html"><i class="fas fa-search"></i> Report Lost</a>
-      <a href="found.php"><i class="fas fa-plus-circle"></i> Add Found</a>
+      <a href="my_claims.php"><i class="fas fa-clipboard-check"></i> My Claims</a>
       <a href="items.php"><i class="fas fa-list"></i> View Posts</a>
     </div>
     <div class="profile-icon" onclick="toggleSidebar()">
