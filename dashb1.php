@@ -2,9 +2,9 @@
 include 'db.php';
 session_start();
 
+
 if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'admin') {
     header("Location: login.php");
-    header("Location: login.html");
     exit();
 }
 ?>
@@ -12,7 +12,7 @@ if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'admin') {
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Lost and Found Dashboard</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
@@ -55,7 +55,6 @@ if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'admin') {
     }
     .sidebar .profile span {
       font-weight: 600;
-      margin-bottom: 10px;
     }
     .sidebar nav a {
       display: flex;
@@ -80,99 +79,58 @@ if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'admin') {
       display: flex;
       flex-direction: column;
     }
-   
-    header a {
-      margin-left: 20px;
-      text-decoration: none;
-      color: #fff;
-      font-weight: 600;
-      transition: color 0.2s ease;
+    iframe {
+      width: 100%;
+      height: 100vh;
+      border: none;
     }
-    header a:hover {
-      color: #10b981;
-    }
- iframe {
-            width: 100%;
-            height: 100vh;
-            border: none;
-            transition: transform 0.5s ease-in-out;
-        }
-
-    .dashboard {
-      padding: 30px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-    }
-
-    .card {
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      color: #000;
-    }
-
-    .card h2 {
-      font-size: 2rem;
-      font-weight: 800;
-    }
-
-    .card p {
-      color: #555;
-    }
-
-    .card .more-info {
-      display: block;
-      margin-top: 10px;
-      color: #fff;
-      text-decoration: none;
-    }
-
-    footer {
-      text-align: center;
-      padding: 15px;
-      background-color: #fff;
-      color: #888;
-      font-size: 0.9rem;
-    }
-
-
-        iframe.show {
-            transform: translateY(0);
-        }    
   </style>
-    <script src="dashb.js">
-    </script>
 </head>
 <body>
   <aside class="sidebar">
     <div class="logo">Lost and Found</div>
     <div class="profile">
-      <img src="" alt="User" />
+      <img src="tin.jpg" alt="Admin" />
       <div>
-          <span id="username-Container"></span></br>
+        <span id="username-Container"></span><br/>
         <small style="color: #1dd1a1">● Admin</small>
       </div>
     </div>
     <nav>
-  
-  <a href="#" class="active" id="dashboard"><i class="fas fa-tachometer-alt"></i>🏠 Dashboard</a>
-  <a href="#" id="image-dashboard"><i class="fas fa-image"></i> 🖼️ Post Images</a>
-  <a href="#" id="user_management"><i class="fas fa-users-cog"></i>👥 User Management</a>
-  <a href="index.html"><i class="fas fa-power-off"></i>🚪 Logout</a>
-</nav>
-
+      <a href="#" class="active" id="dashboard"><i class="fas fa-tachometer-alt"></i>🏠 Dashboard</a>
+      <a href="#" id="post_items"><i class="fas fa-image"></i> 🖼️ Post Items</a>
+      <a href="#" id="user_management"><i class="fas fa-users-cog"></i>👥 User Management</a>
+      <a href="#" id="manage_claims"><i class="fas fa-check-circle"></i>✅ Manage Claims</a>
+      <a href="index.html"><i class="fas fa-power-off"></i>🚪 Logout</a>
+    </nav>
   </aside>
 
-  <div class="main-content">
-    <div class="topbar">
+  <iframe src="dashboard.php" id="main-content"></iframe>
 
-
-    </div>
+  <script>
+  
+    document.getElementById('username-Container').innerHTML = '<?php echo $_SESSION["username"]; ?>';
 
     
-    <iframe src="dashboard.php" class="main-content" id="main-content" style="height:100vh;"></iframe>
-<script>
-document.getElementById('username-Container').innerHTML = '<?php echo $_SESSION["username"]?>';
-</script>
+    document.getElementById('dashboard').addEventListener('click', function(e) {
+      e.preventDefault();
+      document.getElementById('main-content').src = 'dashboard.php';
+    });
+
+    document.getElementById('post_items').addEventListener('click', function(e) {
+      e.preventDefault();
+      document.getElementById('main-content').src = 'post_items.html';
+    });
+
+    document.getElementById('user_management').addEventListener('click', function(e) {
+      e.preventDefault();
+      document.getElementById('main-content').src = 'user_management.php';
+    });
+
+    document.getElementById('manage_claims').addEventListener('click', function(e) {
+      e.preventDefault();
+      document.getElementById('main-content').src = 'admin_claims.php';
+    });
+  </script>
+</body>
+</html>
