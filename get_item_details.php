@@ -1,38 +1,29 @@
 <?php
+include 'db.php';
 
-require_once 'db.php'; 
+header('Content-Type: application/json');
 
+$id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
-if (isset($_GET['id'])) {
-    $itemId = $_GET['id'];
+$sql = "SELECT * FROM lost_items WHERE id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $id);
+$stmt->execute();
+$result = $stmt->get_result();
 
-
-    $query = "SELECT * FROM lost_items WHERE id = ?";
-
-    if($stmt = $conn->prepare($query)){
-        $stmt->bind_param("i", $itemId);
-        $stmt->execute();
-
-        $result = $stmt->get_result();
-
-        if($item = $result->fetch_assoc()){
-            echo json_encode([
-                'id' => $item['id'],
-                'name' => $item['name'],
-                'date' => $item['date_found'],
-                'location' => $item['location'],
-                'description' => $item['description'],
-                'image_path' => $item['image_path'],
-            ]);
-        } else {
-            echo json_encode(['error' => 'Item not Found']);
-        }
-
-        $stmt->close();
-
-    } else {
-        echo json_encode(['error' => 'Failed to prepare statement']);
-    }
-}else {
-    echo json_encode(['error' => 'Item ID is required']);
+if ($row = $result->fetch_assoc()) {
+  echo json_encode([
+    'id' => $row['id'],
+    'name' => $row['name'],
+    'image_path' => $row['image_path'],
+    'date_found' => $row['date_found'],
+    'location' => $row['location'],
+    'description' => $row['description'],
+    'anonymous' => $row['anonymous'],
+    'uploader_name' => $row['uploader_name'],
+    'claimed' => $row['claimed']
+  ]);
+} else {
+  echo json_encode(['error' => 'Item not found']);
 }
+?>
