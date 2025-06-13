@@ -2,7 +2,7 @@
 session_start();
 include 'db.php';
 
-// Check if the user is logged in
+
 if (!isset($_SESSION['user_id'])) {
     header("Location: index.html"); // or your login page
     exit();
@@ -10,7 +10,7 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-// Get all claims by this user
+
 $sql = "SELECT c.id, c.status, l.name 
         FROM claims c 
         JOIN lost_items l ON c.item_id = l.id 
