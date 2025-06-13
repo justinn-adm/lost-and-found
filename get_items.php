@@ -1,22 +1,21 @@
 <?php
 include 'db.php';
 
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
 header('Content-Type: application/json');
 
-$result = $conn->query("SELECT * FROM lost_items ORDER BY date_found");
+$sql = "SELECT id, name, image_path, claimed FROM lost_items";
+$result = $conn->query($sql);
 
 $items = [];
 
-if ($result->num_rows > 0) {
-    while($row = $result->fetch_assoc()) {
-        $items[] = $row;
-    }
+while ($row = $result->fetch_assoc()) {
+  $items[] = [
+    'id' => $row['id'],
+    'name' => $row['name'],
+    'image_path' => $row['image_path'],
+    'claimed' => $row['claimed']
+  ];
 }
 
 echo json_encode($items);
-
-$conn->close();
+?>
