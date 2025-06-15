@@ -14,6 +14,7 @@ $sql = "
         claims.user_id,
         claims.message,
         claims.status,
+        claims.proof_image,
         users.username AS claimant_name,
         lost_items.name AS item_name
     FROM claims
@@ -44,6 +45,7 @@ $result = $conn->query($sql);
                     <th>Item</th>
                     <th>Claimant</th>
                     <th>Message</th>
+                    <th>Proof Image</th>
                     <th>Status</th>
                     <th>Action</th>
                 </tr>
@@ -56,6 +58,15 @@ $result = $conn->query($sql);
                             <td><?= htmlspecialchars($row['item_name']); ?></td>
                             <td><?= htmlspecialchars($row['claimant_name']); ?></td>
                             <td class="text-start"><?= nl2br(htmlspecialchars($row['message'])); ?></td>
+                            <td>
+                                <?php if (!empty($row['proof_image'])): ?>
+                                    <a href="<?= htmlspecialchars($row['proof_image']); ?>" target="_blank">
+                                        <img src="<?= htmlspecialchars($row['proof_image']); ?>" style="max-width: 100px; max-height: 100px;" alt="Proof Image">
+                                    </a>
+                                <?php else: ?>
+                                    <em>No image</em>
+                                <?php endif; ?>
+                            </td>
                             <td>
                                 <?php
                                     $status = strtolower($row['status']);
@@ -86,7 +97,7 @@ $result = $conn->query($sql);
                     <?php endwhile; ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="6" class="text-center">No claims found.</td>
+                        <td colspan="7" class="text-center">No claims found.</td>
                     </tr>
                 <?php endif; ?>
             </tbody>
@@ -97,4 +108,3 @@ $result = $conn->query($sql);
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-                    
