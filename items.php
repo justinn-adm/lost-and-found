@@ -76,12 +76,9 @@ $total_items = $stmt->num_rows;
       margin-bottom: 15px;
       border-radius: 4px;
     }
-    #claimForm textarea {
+    #claimForm textarea, #claimForm input[type="file"] {
       width: 100%;
-      padding: 8px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      resize: vertical;
+      margin-bottom: 10px;
     }
     #alreadyClaimedNotice {
       color: #dc3545;
@@ -113,8 +110,9 @@ $total_items = $stmt->num_rows;
     <button class="btn btn-secondary mt-2" onclick="closeModal()">Close</button>
     <button class="btn btn-warning mt-2" id="claimBtn" onclick="showClaimForm()">Claim This Item</button>
     <div id="alreadyClaimedNotice" style="display:none;">This item has already been claimed.</div>
-    <form id="claimForm" class="mt-3" style="display:none;">
+    <form id="claimForm" class="mt-3" style="display:none;" enctype="multipart/form-data">
       <textarea id="claimMessage" class="form-control mb-2" placeholder="Explain why this is yours..." required></textarea>
+      <input type="file" id="claimProof" accept="image/*" class="form-control mb-2" required>
       <button type="submit" class="btn btn-warning">Submit Claim</button>
     </form>
   </div>
@@ -179,13 +177,14 @@ $total_items = $stmt->num_rows;
 
   document.getElementById('claimForm').addEventListener('submit', function(e) {
     e.preventDefault();
-    const itemId = document.getElementById('currentItemId').value;
-    const message = document.getElementById('claimMessage').value;
+    const formData = new FormData();
+    formData.append('item_id', document.getElementById('currentItemId').value);
+    formData.append('message', document.getElementById('claimMessage').value);
+    formData.append('proof_image', document.getElementById('claimProof').files[0]);
 
     fetch('claim_item.php', {
       method: 'POST',
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-      body: `item_id=${encodeURIComponent(itemId)}&message=${encodeURIComponent(message)}`
+      body: formData
     })
     .then(res => res.text())
     .then(response => {
