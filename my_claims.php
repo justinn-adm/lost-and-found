@@ -2,14 +2,12 @@
 session_start();
 include 'db.php';
 
-
 if (!isset($_SESSION['user_id'])) {
-    header("Location: index.html"); // or your login page
+    header("Location: index.html");
     exit();
 }
 
 $user_id = $_SESSION['user_id'];
-
 
 $sql = "SELECT c.id, c.status, l.name 
         FROM claims c 
@@ -25,71 +23,55 @@ $result = $stmt->get_result();
 <head>
     <meta charset="UTF-8">
     <title>My Claims</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, sans-serif;
-            background: #f4f6f9;
-            margin: 0;
-            padding: 40px;
-            color: #333;
-        }
-        h1 {
-            text-align: center;
-            color: #5C4ACF;
-        }
-        table {
-            width: 80%;
-            margin: 40px auto;
-            border-collapse: collapse;
-            background: #fff;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            border-radius: 8px;
-            overflow: hidden;
-        }
-        th, td {
-            padding: 15px 20px;
-            text-align: left;
-        }
-        th {
-            background: #5C4ACF;
-            color: #fff;
-            text-transform: uppercase;
-            font-size: 14px;
-        }
-        tr:nth-child(even) {
-            background: #f9f9f9;
-        }
-        tr:hover {
-            background: #f1f1f1;
-        }
-        td {
-            font-size: 15px;
-        }
-    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-    <h1>My Claims</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Item Name</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php if ($result->num_rows > 0): ?>
-                <?php while ($row = $result->fetch_assoc()) : ?>
+<body class="bg-light">
+    <div class="container py-5">
+        <h1 class="text-center text-primary mb-4">My Claims</h1>
+
+        <div class="text-center mb-4">
+            <a href="javascript:history.back()" class="btn btn-primary">Back</a>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped shadow-sm">
+                <thead class="table-primary">
                     <tr>
-                        <td><?php echo htmlspecialchars($row['name']); ?></td>
-                        <td><?php echo ucfirst(htmlspecialchars($row['status'])); ?></td>
+                        <th>Item Name</th>
+                        <th>Status</th>
                     </tr>
-                <?php endwhile; ?>
-            <?php else: ?>
-                <tr>
-                    <td colspan="2" style="text-align: center;">No claims found.</td>
-                </tr>
-            <?php endif; ?>
-        </tbody>
-    </table>
+                </thead>
+                <tbody>
+                    <?php if ($result->num_rows > 0): ?>
+                        <?php while ($row = $result->fetch_assoc()) : ?>
+                            <tr>
+                                <td><?php echo htmlspecialchars($row['name']); ?></td>
+                                <td>
+                                    <?php
+                                        $status = strtolower($row['status']);
+                                        $badge_class = match ($status) {
+                                            'approved' => 'success',
+                                            'pending' => 'warning',
+                                            'rejected' => 'danger',
+                                            default => 'secondary'
+                                        };
+                                    ?>
+                                    <span class="badge bg-<?php echo $badge_class; ?>">
+                                        <?php echo ucfirst(htmlspecialchars($status)); ?>
+                                    </span>
+                                </td>
+                            </tr>
+                        <?php endwhile; ?>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="2" class="text-center">No claims found.</td>
+                        </tr>
+                    <?php endif; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
