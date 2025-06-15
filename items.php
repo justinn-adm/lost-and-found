@@ -2,7 +2,6 @@
 include 'db.php';
 session_start();
 
-// Count total items
 $total_items = 0;
 $query = "SELECT id FROM lost_items";
 $stmt = $conn->prepare($query);
@@ -16,24 +15,12 @@ $total_items = $stmt->num_rows;
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Lost and Found - Items</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f9f9f9;
-      margin: 0;
-      padding: 20px;
-    }
-    .summary {
-      text-align: center;
-      font-size: 1.2rem;
-      margin-bottom: 20px;
-    }
     .items-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
       gap: 20px;
-      max-width: 1200px;
-      margin: 0 auto;
     }
     .item-card {
       background: #fff;
@@ -53,26 +40,11 @@ $total_items = $stmt->num_rows;
       object-fit: cover;
       border-radius: 4px;
     }
-    .item-card p {
-      margin: 10px 0;
-      font-weight: bold;
-    }
-    .item-card button {
-      background: #16a085;
-      color: #fff;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    .item-card button:hover {
-      background: #12876f;
-    }
     .claimed-badge {
       position: absolute;
       top: 10px;
       right: 10px;
-      background: #e74c3c;
+      background: #dc3545;
       color: #fff;
       padding: 4px 8px;
       font-size: 12px;
@@ -104,30 +76,6 @@ $total_items = $stmt->num_rows;
       margin-bottom: 15px;
       border-radius: 4px;
     }
-    .modal-content h3 {
-      margin-top: 0;
-    }
-    .modal-content p {
-      margin: 8px 0;
-    }
-    .modal-content button {
-      margin-top: 15px;
-      background: #16a085;
-      color: #fff;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    .modal-content button:hover {
-      background: #12876f;
-    }
-    #claimBtn {
-      background: #e67e22;
-    }
-    #claimBtn:hover {
-      background: #d35400;
-    }
     #claimForm textarea {
       width: 100%;
       padding: 8px;
@@ -135,142 +83,132 @@ $total_items = $stmt->num_rows;
       border-radius: 4px;
       resize: vertical;
     }
-    #claimForm button {
-      background: #e67e22;
-    }
-    #claimForm button:hover {
-      background: #d35400;
-    }
     #alreadyClaimedNotice {
-      color: #e74c3c;
+      color: #dc3545;
       font-weight: bold;
       margin-top: 15px;
     }
   </style>
 </head>
-<body>
+<body class="bg-light">
 
-  <div class="summary">
-    Total Lost Items: <strong style="color:#16a085;"><?php echo $total_items; ?></strong>
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <a href="lost.php" class="btn btn-outline-secondary">&larr; Home</a>
+    <h4 class="mb-0">Total Lost Items: <span class="text-success fw-bold"><?= $total_items; ?></span></h4>
   </div>
 
   <div class="items-grid" id="itemsGrid"></div>
+</div>
 
-  <div class="modal" id="itemModal">
-    <div class="modal-content">
-      <h3 id="modalItemName"></h3>
-      <img id="modalItemImage" src="" alt="Item Image">
-      <p><strong>Date:</strong> <span id="modalItemDate"></span></p>
-      <p><strong>Location:</strong> <span id="modalItemLocation"></span></p>
-      <p><strong>Description:</strong> <span id="modalItemDescription"></span></p>
-      <p><strong>Posted by:</strong> <span id="modalItemPoster"></span></p>
-
-      <input type="hidden" id="currentItemId">
-
-      <button onclick="closeModal()">Close</button>
-      <button id="claimBtn" onclick="showClaimForm()">Claim This Item</button>
-      <div id="alreadyClaimedNotice" style="display:none;">This item has already been claimed.</div>
-
-      <form id="claimForm" style="margin-top: 15px; display:none;">
-        <textarea id="claimMessage" placeholder="Explain why this is yours..." required></textarea>
-        <button type="submit">Submit Claim</button>
-      </form>
-    </div>
+<div class="modal" id="itemModal">
+  <div class="modal-content">
+    <h5 id="modalItemName" class="fw-bold"></h5>
+    <img id="modalItemImage" src="" alt="Item Image">
+    <p><strong>Date:</strong> <span id="modalItemDate"></span></p>
+    <p><strong>Location:</strong> <span id="modalItemLocation"></span></p>
+    <p><strong>Description:</strong> <span id="modalItemDescription"></span></p>
+    <p><strong>Posted by:</strong> <span id="modalItemPoster"></span></p>
+    <input type="hidden" id="currentItemId">
+    <button class="btn btn-secondary mt-2" onclick="closeModal()">Close</button>
+    <button class="btn btn-warning mt-2" id="claimBtn" onclick="showClaimForm()">Claim This Item</button>
+    <div id="alreadyClaimedNotice" style="display:none;">This item has already been claimed.</div>
+    <form id="claimForm" class="mt-3" style="display:none;">
+      <textarea id="claimMessage" class="form-control mb-2" placeholder="Explain why this is yours..." required></textarea>
+      <button type="submit" class="btn btn-warning">Submit Claim</button>
+    </form>
   </div>
+</div>
 
-  <script>
-    function fetchItems() {
-      fetch('get_items.php')
-        .then(res => res.json())
-        .then(data => {
-          const grid = document.getElementById('itemsGrid');
-          grid.innerHTML = '';
-          data.forEach(item => {
-            const card = document.createElement('div');
-            card.className = 'item-card';
-            card.innerHTML = `
-              ${item.claimed == 1 ? '<div class="claimed-badge">Claimed</div>' : ''}
-              <img src="${item.image_path}" alt="${item.name}">
-              <p>${item.name}</p>
-              <button onclick="showItemDetails(${item.id})">Detail</button>
-            `;
-            grid.appendChild(card);
-          });
-        })
-        .catch(err => console.error('Error fetching items:', err));
-    }
-
-    function showItemDetails(id) {
-      fetch(`get_item_details.php?id=${id}`)
-        .then(res => res.json())
-        .then(item => {
-          document.getElementById('modalItemName').innerText = item.name;
-          document.getElementById('modalItemImage').src = item.image_path;
-          document.getElementById('modalItemDate').innerText = item.date_found;
-          document.getElementById('modalItemLocation').innerText = item.location;
-          document.getElementById('modalItemDescription').innerText = item.description;
-          const poster = item.anonymous == 1 ? "Anonymous" : (item.uploader_name || "Unknown");
-          document.getElementById('modalItemPoster').innerText = poster;
-
-          document.getElementById('currentItemId').value = item.id;
-
-          // Reset claim form
-          document.getElementById('claimForm').style.display = 'none';
-          document.getElementById('claimMessage').value = '';
-
-          if (item.claimed == 1) {
-            document.getElementById('claimBtn').style.display = 'none';
-            document.getElementById('alreadyClaimedNotice').style.display = 'block';
-          } else {
-            document.getElementById('claimBtn').style.display = 'inline-block';
-            document.getElementById('alreadyClaimedNotice').style.display = 'none';
-          }
-
-          document.getElementById('itemModal').style.display = 'flex';
-        })
-        .catch(err => console.error('Error fetching details:', err));
-    }
-
-    function closeModal() {
-      document.getElementById('itemModal').style.display = 'none';
-    }
-
-    function showClaimForm() {
-      document.getElementById('claimForm').style.display = 'block';
-      document.getElementById('claimBtn').style.display = 'none';
-    }
-
-    document.getElementById('claimForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const itemId = document.getElementById('currentItemId').value;
-      const message = document.getElementById('claimMessage').value;
-
-      fetch('claim_item.php', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        body: `item_id=${encodeURIComponent(itemId)}&message=${encodeURIComponent(message)}`
+<script>
+  function fetchItems() {
+    fetch('get_items.php')
+      .then(res => res.json())
+      .then(data => {
+        const grid = document.getElementById('itemsGrid');
+        grid.innerHTML = '';
+        data.forEach(item => {
+          const card = document.createElement('div');
+          card.className = 'item-card';
+          card.innerHTML = `
+            ${item.claimed == 1 ? '<div class="claimed-badge">Claimed</div>' : ''}
+            <img src="${item.image_path}" alt="${item.name}">
+            <p class="fw-bold mt-2">${item.name}</p>
+            <button class="btn btn-success btn-sm mt-1" onclick="showItemDetails(${item.id})">Detail</button>
+          `;
+          grid.appendChild(card);
+        });
       })
-      .then(res => res.text())
-      .then(response => {
-        alert(response);
-        closeModal();
-        fetchItems();
+      .catch(err => console.error('Error fetching items:', err));
+  }
+
+  function showItemDetails(id) {
+    fetch(`get_item_details.php?id=${id}`)
+      .then(res => res.json())
+      .then(item => {
+        document.getElementById('modalItemName').innerText = item.name;
+        document.getElementById('modalItemImage').src = item.image_path;
+        document.getElementById('modalItemDate').innerText = item.date_found;
+        document.getElementById('modalItemLocation').innerText = item.location;
+        document.getElementById('modalItemDescription').innerText = item.description;
+        const poster = item.anonymous == 1 ? "Anonymous" : (item.uploader_name || "Unknown");
+        document.getElementById('modalItemPoster').innerText = poster;
+        document.getElementById('currentItemId').value = item.id;
+        document.getElementById('claimForm').style.display = 'none';
+        document.getElementById('claimMessage').value = '';
+        if (item.claimed == 1) {
+          document.getElementById('claimBtn').style.display = 'none';
+          document.getElementById('alreadyClaimedNotice').style.display = 'block';
+        } else {
+          document.getElementById('claimBtn').style.display = 'inline-block';
+          document.getElementById('alreadyClaimedNotice').style.display = 'none';
+        }
+        document.getElementById('itemModal').style.display = 'flex';
       })
-      .catch(err => {
-        console.error(err);
-        alert('Error submitting claim.');
-      });
+      .catch(err => console.error('Error fetching details:', err));
+  }
+
+  function closeModal() {
+    document.getElementById('itemModal').style.display = 'none';
+  }
+
+  function showClaimForm() {
+    document.getElementById('claimForm').style.display = 'block';
+    document.getElementById('claimBtn').style.display = 'none';
+  }
+
+  document.getElementById('claimForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const itemId = document.getElementById('currentItemId').value;
+    const message = document.getElementById('claimMessage').value;
+
+    fetch('claim_item.php', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      body: `item_id=${encodeURIComponent(itemId)}&message=${encodeURIComponent(message)}`
+    })
+    .then(res => res.text())
+    .then(response => {
+      alert(response);
+      closeModal();
+      fetchItems();
+    })
+    .catch(err => {
+      console.error(err);
+      alert('Error submitting claim.');
     });
+  });
 
-    window.addEventListener('click', function(event) {
-      const modal = document.getElementById('itemModal');
-      if (event.target === modal) {
-        closeModal();
-      }
-    });
+  window.addEventListener('click', function(event) {
+    const modal = document.getElementById('itemModal');
+    if (event.target === modal) {
+      closeModal();
+    }
+  });
 
-    document.addEventListener('DOMContentLoaded', fetchItems);
-  </script>
+  document.addEventListener('DOMContentLoaded', fetchItems);
+</script>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
