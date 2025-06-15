@@ -74,11 +74,28 @@
       text-decoration: none;
       color: #ffffff;
       font-weight: 600;
-      transition: color 0.2s ease;
+      position: relative;
+      font-size: 1rem;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background: #10b981;
+      transition: width 0.3s ease;
     }
 
     .nav-links a:hover {
       color: #10b981;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
     }
 
     @media (max-width: 600px) {
