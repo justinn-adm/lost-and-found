@@ -1,11 +1,14 @@
 <?php
 include 'db.php';
-
 header('Content-Type: application/json');
 
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
-$sql = "SELECT * FROM lost_items WHERE id = ?";
+$sql = "SELECT l.*, c.user_id AS claimant_id, u.username AS claimant_name
+        FROM lost_items l
+        LEFT JOIN claims c ON l.id = c.item_id AND c.status = 'approved'
+        LEFT JOIN users u ON c.user_id = u.id
+        WHERE l.id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $id);
 $stmt->execute();
@@ -21,7 +24,8 @@ if ($row = $result->fetch_assoc()) {
     'description' => $row['description'],
     'anonymous' => $row['anonymous'],
     'uploader_name' => $row['uploader_name'],
-    'claimed' => $row['claimed']
+    'claimed' => $row['claimed'],
+    'claimant_name' => $row['claimant_name'] ?? null
   ]);
 } else {
   echo json_encode(['error' => 'Item not found']);
