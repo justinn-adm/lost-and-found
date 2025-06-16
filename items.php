@@ -8,6 +8,8 @@ $stmt = $conn->prepare($query);
 $stmt->execute();
 $stmt->store_result();
 $total_items = $stmt->num_rows;
+
+$isAdmin = isset($_SESSION['role']) && $_SESSION['role'] === 'admin';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -76,15 +78,6 @@ $total_items = $stmt->num_rows;
       margin-bottom: 15px;
       border-radius: 4px;
     }
-    #claimForm textarea, #claimForm input[type="file"] {
-      width: 100%;
-      margin-bottom: 10px;
-    }
-    #alreadyClaimedNotice {
-      color: #dc3545;
-      font-weight: bold;
-      margin-top: 15px;
-    }
   </style>
 </head>
 <body class="bg-light">
@@ -94,7 +87,6 @@ $total_items = $stmt->num_rows;
     <a href="lost.php" class="btn btn-outline-secondary">&larr; Home</a>
     <h4 class="mb-0">Total Lost Items: <span class="text-success fw-bold"><?= $total_items; ?></span></h4>
   </div>
-
   <div class="items-grid" id="itemsGrid"></div>
 </div>
 
@@ -106,10 +98,11 @@ $total_items = $stmt->num_rows;
     <p><strong>Location:</strong> <span id="modalItemLocation"></span></p>
     <p><strong>Description:</strong> <span id="modalItemDescription"></span></p>
     <p><strong>Posted by:</strong> <span id="modalItemPoster"></span></p>
+    <p id="claimantInfo" style="display:none;"><strong>Claimed by:</strong> <span id="modalClaimant"></span></p>
     <input type="hidden" id="currentItemId">
+    <div id="alreadyClaimedNotice" style="display:none;" class="text-danger fw-bold">This item has already been claimed.</div>
     <button class="btn btn-secondary mt-2" onclick="closeModal()">Close</button>
     <button class="btn btn-warning mt-2" id="claimBtn" onclick="showClaimForm()">Claim This Item</button>
-    <div id="alreadyClaimedNotice" style="display:none;">This item has already been claimed.</div>
     <form id="claimForm" class="mt-3" style="display:none;" enctype="multipart/form-data">
       <textarea id="claimMessage" class="form-control mb-2" placeholder="Explain why this is yours..." required></textarea>
       <input type="file" id="claimProof" accept="image/*" class="form-control mb-2" required>
@@ -119,6 +112,8 @@ $total_items = $stmt->num_rows;
 </div>
 
 <script>
+  const isAdmin = <?= json_encode($isAdmin) ?>;
+
   function fetchItems() {
     fetch('get_items.php')
       .then(res => res.json())
@@ -133,6 +128,7 @@ $total_items = $stmt->num_rows;
             <img src="${item.image_path}" alt="${item.name}">
             <p class="fw-bold mt-2">${item.name}</p>
             <button class="btn btn-success btn-sm mt-1" onclick="showItemDetails(${item.id})">Detail</button>
+            ${isAdmin ? `<button class="btn btn-danger btn-sm mt-1" onclick="deleteItem(${item.id})">Delete</button>` : ''}
           `;
           grid.appendChild(card);
         });
@@ -144,26 +140,42 @@ $total_items = $stmt->num_rows;
     fetch(`get_item_details.php?id=${id}`)
       .then(res => res.json())
       .then(item => {
+        if (item.error) {
+          alert(item.error);
+          return;
+        }
         document.getElementById('modalItemName').innerText = item.name;
         document.getElementById('modalItemImage').src = item.image_path;
         document.getElementById('modalItemDate').innerText = item.date_found;
         document.getElementById('modalItemLocation').innerText = item.location;
         document.getElementById('modalItemDescription').innerText = item.description;
-        const poster = item.anonymous == 1 ? "Anonymous" : (item.uploader_name || "Unknown");
-        document.getElementById('modalItemPoster').innerText = poster;
+        document.getElementById('modalItemPoster').innerText = item.anonymous == 1 ? "Anonymous" : (item.uploader_name || "Unknown");
         document.getElementById('currentItemId').value = item.id;
         document.getElementById('claimForm').style.display = 'none';
         document.getElementById('claimMessage').value = '';
+
         if (item.claimed == 1) {
           document.getElementById('claimBtn').style.display = 'none';
           document.getElementById('alreadyClaimedNotice').style.display = 'block';
+
+          if (item.claimant_name) {
+            document.getElementById('modalClaimant').innerText = item.claimant_name;
+            document.getElementById('claimantInfo').style.display = 'block';
+          } else {
+            document.getElementById('claimantInfo').style.display = 'none';
+          }
         } else {
           document.getElementById('claimBtn').style.display = 'inline-block';
           document.getElementById('alreadyClaimedNotice').style.display = 'none';
+          document.getElementById('claimantInfo').style.display = 'none';
         }
+
         document.getElementById('itemModal').style.display = 'flex';
       })
-      .catch(err => console.error('Error fetching details:', err));
+      .catch(err => {
+        console.error(err);
+        alert('Failed to load item details.');
+      });
   }
 
   function closeModal() {
@@ -197,6 +209,27 @@ $total_items = $stmt->num_rows;
       alert('Error submitting claim.');
     });
   });
+
+  function deleteItem(id) {
+    if (confirm("Are you sure you want to delete this item?")) {
+      fetch('delete_item.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ item_id: id })
+      })
+      .then(res => res.text())
+      .then(response => {
+        alert(response);
+        fetchItems();
+      })
+      .catch(err => {
+        console.error(err);
+        alert('Failed to delete item.');
+      });
+    }
+  }
 
   window.addEventListener('click', function(event) {
     const modal = document.getElementById('itemModal');
