@@ -5,9 +5,7 @@
   <title>FAQ - CvSU Naic Lost and Found</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Luckiest+Guy&family=Poppins:wght@600&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0; padding: 0; box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       font-family: 'Inter', sans-serif;
@@ -16,104 +14,106 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      overflow-y: scroll;
     }
 
+    /* Header */
     header {
-      background: rgba(12, 43, 106, 0.8);
-      padding: 20px 40px;
+      background: rgba(12, 43, 106, 0.7);
+      padding: 15px 40px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      backdrop-filter: blur(8px);
     }
 
-    .brand img {
-      width: 70px;
-      height: auto;
-    }
+    .brand img { width: 65px; height: auto; }
 
+    nav { display: flex; gap: 20px; }
     nav a {
-      color: #fff;
-      text-decoration: none;
-      margin-left: 20px;
-      font-weight: 600;
-      transition: color 0.2s ease;
+      color: #fff; text-decoration: none; font-weight: 600;
+      font-size: 0.95rem; transition: color 0.2s ease;
     }
+    nav a:hover { color: #10b981; }
 
-    nav a:hover {
-      color: #10b981;
-    }
-
+    /* FAQ Section */
     main {
       flex: 1;
-      padding: 60px 10%;
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 20px;
-      max-width: 800px;
+      padding: 50px 5%;
+      max-width: 900px;
       margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
     }
 
     .faq-item {
       background: rgba(255, 255, 255, 0.05);
-      border: 2px solid rgba(255, 255, 255, 0.1);
-      border-radius: 20px;
-      padding: 25px 30px;
-      transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
-      opacity: 0;
-      transform: translateY(50px);
-      animation: fadeInUp 1s forwards;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
       overflow: hidden;
+      transition: all 0.3s ease;
+      cursor: pointer;
     }
-
-    .faq-item:nth-child(1) { animation-delay: 0.2s; }
-    .faq-item:nth-child(2) { animation-delay: 0.4s; }
-    .faq-item:nth-child(3) { animation-delay: 0.6s; }
-    .faq-item:nth-child(4) { animation-delay: 0.8s; }
 
     .faq-item:hover {
       border-color: #10b981;
-      box-shadow: 0 15px 30px rgba(16, 185, 129, 0.3);
-      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 8px 25px rgba(16, 185, 129, 0.25);
+      transform: translateY(-3px);
     }
 
-    .faq-item summary {
+    .faq-question {
       font-family: 'Poppins', sans-serif;
-      font-size: 1.3rem;
+      font-size: 1.2rem;
       font-weight: 600;
-      cursor: pointer;
       color: #10b981;
-      list-style: none;
+      padding: 20px 25px;
       position: relative;
-      padding-right: 30px;
     }
 
-    .faq-item summary::after {
+    .faq-question::after {
       content: '+';
       position: absolute;
-      right: 0;
-      font-size: 1.5rem;
+      right: 25px;
+      font-size: 1.4rem;
       transition: transform 0.3s ease;
     }
 
-    .faq-item[open] summary::after {
+    .faq-item.active .faq-question::after {
       transform: rotate(45deg);
     }
 
-    .faq-item p {
-      margin-top: 10px;
+    .faq-answer {
+      padding: 0 25px;
       line-height: 1.6;
+      font-size: 0.95rem;
+      color: #e5e5e5;
       max-height: 0;
       overflow: hidden;
-      transition: max-height 0.5s ease, opacity 0.5s ease;
       opacity: 0;
+      transition: max-height 0.5s ease, opacity 0.5s ease;
     }
 
-    .faq-item[open] p {
-      max-height: 200px;
+    .faq-item.active .faq-answer {
       opacity: 1;
     }
 
+    /* Back to Top */
+    #backToTop {
+      position: fixed;
+      bottom: 25px; right: 25px;
+      background: #10b981; color: #fff;
+      border: none; padding: 12px 18px;
+      border-radius: 50%;
+      cursor: pointer; font-weight: bold;
+      font-size: 1rem;
+      box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+      opacity: 0; visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+    }
+    #backToTop.show { opacity: 1; visibility: visible; transform: translateY(0); }
+    #backToTop:hover { background: #0f766e; }
+
+    /* Footer */
     footer {
       text-align: center;
       padding: 20px;
@@ -121,54 +121,11 @@
       font-size: 0.85rem;
     }
 
-    #backToTop {
-      position: fixed;
-      bottom: 40px;
-      right: 40px;
-      background: #10b981;
-      color: #fff;
-      border: none;
-      padding: 12px 18px;
-      border-radius: 50px;
-      cursor: pointer;
-      font-weight: bold;
-      font-size: 1rem;
-      box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
-    }
-
-    #backToTop.show {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(0);
-    }
-
-    #backToTop:hover {
-      background: #0f766e;
-    }
-
-    @keyframes fadeInUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @media (max-width: 600px) {
-      header, nav {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      nav {
-        margin-top: 10px;
-      }
-
-      nav a {
-        margin: 5px 0;
-      }
+    /* Responsive */
+    @media (max-width: 768px) {
+      header { flex-direction: column; align-items: flex-start; padding: 15px 20px; }
+      nav { flex-direction: column; gap: 10px; margin-top: 10px; }
+      main { padding: 40px 20px; }
     }
   </style>
 </head>
@@ -186,47 +143,70 @@
   </header>
 
   <main>
-    <details class="faq-item">
-      <summary>How do I report a lost item?</summary>
-      <p>Sign in and click on "Report Item". Fill in all the details about the item and submit the form. Our team will assist you.</p>
-    </details>
+    <div class="faq-item">
+      <div class="faq-question">How do I report a lost item?</div>
+      <div class="faq-answer">Sign in and click on "Report Item". Fill in all the details about the item and submit the form. Our team will assist you.</div>
+    </div>
 
-    <details class="faq-item">
-      <summary>How can I claim a found item?</summary>
-      <p>Check our list of found items on the website. If you see yours, click "Claim" and provide proof of ownership to verify your claim.</p>
-    </details>
+    <div class="faq-item">
+      <div class="faq-question">How can I claim a found item?</div>
+      <div class="faq-answer">Check our list of found items on the website. If you see yours, click "Claim" and provide proof of ownership to verify your claim.</div>
+    </div>
 
-    <details class="faq-item">
-      <summary>Is there any fee for using the Lost and Found service?</summary>
-      <p>No, the CvSU Naic Lost and Found service is free for all students and staff.</p>
-    </details>
+    <div class="faq-item">
+      <div class="faq-question">Is there any fee for using the Lost and Found service?</div>
+      <div class="faq-answer">No, the CvSU Naic Lost and Found service is free for all students and staff.</div>
+    </div>
 
-    <details class="faq-item">
-      <summary>How long are unclaimed items kept?</summary>
-      <p>Items are securely stored for up to 90 days. After that, they may be donated or properly disposed of.</p>
-    </details>
+    <div class="faq-item">
+      <div class="faq-question">How long are unclaimed items kept?</div>
+      <div class="faq-answer">Items are securely stored for up to 90 days. After that, they may be donated or properly disposed of.</div>
+    </div>
   </main>
 
-  <button id="backToTop">↑ Top</button>
+  <button id="backToTop">↑</button>
 
   <footer>
     &copy; 2025 CvSU Naic Lost and Found. All rights reserved.
   </footer>
 
   <script>
-    const items = document.querySelectorAll('.faq-item');
-    items.forEach(item => {
-      item.addEventListener('toggle', () => {
-        if (item.open) {
-          items.forEach(other => {
-            if (other !== item && other.open) {
-              other.open = false;
-            }
-          });
+    const faqs = document.querySelectorAll('.faq-item');
+
+    faqs.forEach(faq => {
+      const question = faq.querySelector('.faq-question');
+      const answer = faq.querySelector('.faq-answer');
+
+      question.addEventListener('click', () => {
+        // Close other open FAQs
+        faqs.forEach(item => {
+          if (item !== faq && item.classList.contains('active')) {
+            collapse(item);
+          }
+        });
+
+        // Toggle this one
+        if (faq.classList.contains('active')) {
+          collapse(faq);
+        } else {
+          expand(faq);
         }
       });
     });
 
+    function expand(faq) {
+      const answer = faq.querySelector('.faq-answer');
+      faq.classList.add('active');
+      answer.style.maxHeight = answer.scrollHeight + "px";
+    }
+
+    function collapse(faq) {
+      const answer = faq.querySelector('.faq-answer');
+      faq.classList.remove('active');
+      answer.style.maxHeight = "0";
+    }
+
+    // Back to Top
     const backToTop = document.getElementById('backToTop');
     window.addEventListener('scroll', () => {
       if (window.scrollY > 200) {
@@ -235,12 +215,8 @@
         backToTop.classList.remove('show');
       }
     });
-
     backToTop.addEventListener('click', () => {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   </script>
 
