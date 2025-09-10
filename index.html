@@ -195,21 +195,6 @@
       left: 100%;
     }
 
-    /* Theme Toggle */
-    #theme-toggle {
-      background: none;
-      border: none;
-      font-size: 1.4rem;
-      margin-left: 15px;
-      cursor: pointer;
-      color: #fff;
-      transition: transform 0.3s;
-    }
-
-    #theme-toggle:hover {
-      transform: rotate(20deg);
-    }
-
     /* Responsive */
     @media (max-width: 768px) {
       .typing-box h1 {
@@ -231,7 +216,6 @@
     <nav>
       <a href="about.html">About Us</a>
       <a href="faq.html">FAQ</a>
-      <button id="theme-toggle">🌙</button>
     </nav>
   </header>
 
@@ -299,13 +283,6 @@
     }
     updateTypingText();
     setInterval(updateTypingText, 3000);
-
-    // Theme toggle
-    const themeBtn = document.getElementById("theme-toggle");
-    themeBtn.addEventListener("click", () => {
-      document.body.classList.toggle("light-mode");
-      themeBtn.textContent = document.body.classList.contains("light-mode") ? "☀️" : "🌙";
-    });
   </script>
 </body>
 </html>
