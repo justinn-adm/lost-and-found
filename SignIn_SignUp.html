@@ -5,155 +5,211 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login & Register</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f4f4f4;
+      background: linear-gradient(135deg, #43cea2, #185a9d, #ff9966, #ff5e62);
+      background-size: 400% 400%;
+      animation: gradientBG 12s ease infinite;
       display: flex;
       align-items: center;
       justify-content: center;
       height: 100vh;
-    }
-
-    .container {
-      width: 360px;
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-      overflow: hidden;
-    }
-
-    .tab-buttons {
-      display: flex;
-    }
-
-    .tab-buttons button {
-      flex: 1;
       padding: 1rem;
-      border: none;
-      background: #f1f1f1;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.3s;
     }
 
-    .tab-buttons .active {
-      background: #333;
+    .wrapper {
+      display: flex;
+      gap: 2rem;
+      width: 100%;
+      max-width: 950px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .card {
+      flex: 1 1 380px;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(14px) saturate(180%);
+      -webkit-backdrop-filter: blur(14px) saturate(180%);
+      border-radius: 20px 50px 20px 50px;
+      border: 2px solid transparent;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35),
+                  inset 0 0 25px rgba(255, 255, 255, 0.05);
+      overflow: hidden;
+      animation: fadeInScale 0.6s ease;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.4s ease;
+      position: relative;
+    }
+
+    .card:hover {
+      transform: translateY(-8px) rotateX(2deg) rotateY(-2deg);
+      box-shadow: 0 18px 38px rgba(0, 0, 0, 0.45),
+                  inset 0 0 30px rgba(255, 255, 255, 0.07);
+    }
+
+    .card-header {
+      background: rgba(20, 20, 20, 0.8);
+      color: white;
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 1.3rem;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .card-body {
+      padding: 2rem;
+      flex: 1;
       color: white;
     }
 
-    .form-container {
-      padding: 2rem;
-      display: none;
-      animation: fadeIn 0.4s ease-in-out;
-    }
-
-    .form-container.active {
-      display: block;
-    }
-
     .form-group {
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.2rem;
     }
 
     .form-group input,
     .form-group select {
       width: 100%;
-      padding: 0.75rem;
-      border: 1px solid #ccc;
-      border-radius: 6px;
+      padding: 0.9rem;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      border-radius: 10px;
       font-size: 1rem;
+      background: rgba(0, 0, 0, 0.35);
+      color: white;
+      transition: all 0.3s ease;
+    }
+
+    .form-group input::placeholder {
+      color: #eee;
+    }
+
+    .form-group input:hover,
+    .form-group select:hover {
+      border-color: #00ffc6;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: #00ffc6;
+      box-shadow: 0 0 12px rgba(0, 255, 198, 0.6);
+      outline: none;
+    }
+
+    /* Custom dropdown arrow */
+    .form-group select {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background-image: url("data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='white'><polygon points='0,0 20,0 10,12'/></svg>");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      background-size: 14px;
+      padding-right: 2.5rem;
+      cursor: pointer;
     }
 
     .submit-btn {
-      width: 100%;
-      padding: 0.75rem;
-      background: #333;
+      width: 180px; /* shorter width */
+      padding: 0.8rem;
+      background: linear-gradient(135deg, #00c6ff, #0072ff, #00ffc6);
       color: white;
       border: none;
-      border-radius: 6px;
+      border-radius: 10px;
       font-weight: bold;
       cursor: pointer;
-      transition: background 0.3s;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      background-size: 200% 200%;
+      display: block;
+      margin: 0 auto; /* center inside card */
     }
 
     .submit-btn:hover {
-      background: #555;
+      background-position: right center;
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35), 0 0 15px rgba(0, 255, 198, 0.6);
     }
 
-    @keyframes fadeIn {
+    @keyframes fadeInScale {
       from {
         opacity: 0;
-        transform: translateY(10px);
+        transform: scale(0.9);
       }
       to {
         opacity: 1;
-        transform: translateY(0);
+        transform: scale(1);
       }
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="tab-buttons">
-      <button onclick="toggleForm('login')" id="loginTab" class="active">Sign In</button>
-      <button onclick="toggleForm('register')" id="registerTab">Sign Up</button>
+  <div class="wrapper">
+    <!-- Sign In Card -->
+    <div class="card">
+      <div class="card-header">Sign In</div>
+      <div class="card-body">
+        <form method="POST" action="login.php">
+          <div class="form-group">
+            <input type="text" name="username" placeholder="Username" required />
+          </div>
+          <div class="form-group">
+            <input type="password" name="password" placeholder="Password" required />
+          </div>
+          <button type="submit" class="submit-btn">Sign In</button>
+        </form>
+      </div>
     </div>
 
-    <div class="form-container active" id="login">
-      <form method="POST" action="login.php">
-        <div class="form-group">
-          <input type="text" name="username" placeholder="Username" required />
-        </div>
-        <div class="form-group">
-          <input type="password" name="password" placeholder="Password" required />
-        </div>
-        <button type="submit" class="submit-btn">Sign In</button>
-      </form>
-    </div>
-
-    <div class="form-container" id="register">
-      <form method="POST" action="SignUp.php">
-        <div class="form-group">
-          <input type="text" name="username" placeholder="Username" required />
-        </div>
-        <div class="form-group">
-          <input type="email" name="email" placeholder="Email Address" required />
-        </div>
-        <div class="form-group">
-          <input type="password" name="password" placeholder="Password" required />
-        </div>
-        <div class="form-group">
-          <select name="gender" id="gender" required onchange="setProfileImage()">
-            <option value="">Select Gender</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-          </select>
-        </div>
-        <input type="hidden" name="profile_img" id="profile_img" value="">
-        <button type="submit" class="submit-btn">Sign Up</button>
-      </form>
+    <!-- Sign Up Card -->
+    <div class="card">
+      <div class="card-header">Sign Up</div>
+      <div class="card-body">
+        <form method="POST" action="SignUp.php">
+          <div class="form-group">
+            <input type="text" name="username" placeholder="Username" required />
+          </div>
+          <div class="form-group">
+            <input type="email" name="email" placeholder="Email Address" required />
+          </div>
+          <div class="form-group">
+            <input type="password" name="password" placeholder="Password" required />
+          </div>
+          <div class="form-group">
+            <select name="gender" id="gender" required onchange="setProfileImage()">
+              <option value="" disabled selected>Select Gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+          </div>
+          <input type="hidden" name="profile_img" id="profile_img" value="">
+          <button type="submit" class="submit-btn">Sign Up</button>
+        </form>
+      </div>
     </div>
   </div>
 
   <script>
-    function toggleForm(form) {
-      document.getElementById('login').classList.remove('active');
-      document.getElementById('register').classList.remove('active');
-      document.getElementById('loginTab').classList.remove('active');
-      document.getElementById('registerTab').classList.remove('active');
-
-      document.getElementById(form).classList.add('active');
-      document.getElementById(form + 'Tab').classList.add('active');
-    }
-
     function setProfileImage() {
       const gender = document.getElementById("gender").value;
       const profileImgInput = document.getElementById("profile_img");
       if (gender === "male") {
-        profileImgInput.value = "boy.jfif";
+        profileImgInput.value = "boy.jpg";
       } else if (gender === "female") {
-        profileImgInput.value = "girl.jfif";
+        profileImgInput.value = "girl.jpg";
       } else {
         profileImgInput.value = "";
       }
