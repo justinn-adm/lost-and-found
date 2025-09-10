@@ -32,7 +32,6 @@
     }
 
     .header p {
-      font-family: 'Playfair Display', serif;
       font-size: 18px;
       color: #ddd;
       margin-top: 10px;
@@ -49,6 +48,7 @@
       backdrop-filter: blur(10px);
     }
 
+    /* File Upload */
     .file-upload {
       display: flex;
       align-items: center;
@@ -81,24 +81,71 @@
       max-width: 250px;
     }
 
-    .post-card input[type="text"],
-    .post-card input[type="date"],
-    .post-card textarea {
-      width: 100%;
+    /* Inputs */
+    .form-group {
+      position: relative;
       margin-bottom: 20px;
-      padding: 15px;
-      border-radius: 10px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      background: rgba(255, 255, 255, 0.05);
-      color: #f9f9f9;
-      font-size: 16px;
     }
 
-    .post-card textarea {
+    .form-group .icon {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 18px;
+      color: #10b981;
+      pointer-events: none;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 15px 15px 15px 45px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.08);
+      color: #f9f9f9;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: #10b981;
+      box-shadow: 0 0 12px rgba(16, 185, 129, 0.6);
+      outline: none;
+    }
+
+    /* Calendar Styling */
+    .form-group.date-picker input[type="date"] {
+      appearance: none;
+      -webkit-appearance: none;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding-right: 45px;
+      position: relative;
+      cursor: pointer;
+      color-scheme: dark;
+    }
+
+    .form-group.date-picker input[type="date"]::-webkit-calendar-picker-indicator {
+      cursor: pointer;
+      filter: invert(1) sepia(1) saturate(5) hue-rotate(120deg);
+      opacity: 0.9;
+      transition: transform 0.2s ease, filter 0.2s ease;
+    }
+
+    .form-group.date-picker input[type="date"]::-webkit-calendar-picker-indicator:hover {
+      transform: scale(1.2);
+      filter: invert(1) sepia(1) saturate(8) hue-rotate(140deg);
+    }
+
+    .form-group textarea {
       resize: vertical;
       min-height: 80px;
     }
 
+    /* Anon Option */
     .anon-option {
       display: flex;
       align-items: center;
@@ -109,27 +156,43 @@
 
     .anon-option input[type="checkbox"] {
       transform: scale(1.2);
+      accent-color: #10b981;
     }
 
+    /* Submit Button */
     .post-card button.post-btn {
       width: 100%;
       padding: 15px;
-      background: #10b981;
+      background: linear-gradient(135deg, #10b981, #0e9c6e);
       border: none;
-      border-radius: 10px;
+      border-radius: 12px;
       font-weight: bold;
       font-size: 16px;
       color: #fff;
       cursor: pointer;
-      transition: background 0.3s ease;
+      transition: background 0.3s ease, transform 0.2s ease;
     }
 
     .post-card button.post-btn:hover {
       background: #0e9c6e;
+      transform: translateY(-2px);
     }
 
     ::placeholder {
       color: #ddd;
+    }
+
+    /* Responsive */
+    @media (max-width: 700px) {
+      body {
+        padding: 30px 15px;
+      }
+      .post-card {
+        padding: 20px;
+      }
+      .header h2 {
+        font-size: 26px;
+      }
     }
   </style>
 </head>
@@ -146,14 +209,32 @@
       <button type="button" id="customFileButton">Choose Image</button>
       <span id="fileName">No file chosen</span>
     </div>
-    <input type="text" id="itemLabel" placeholder="Item Name (e.g. Umbrella)">
-    <input type="date" id="itemDate">
-    <input type="text" id="itemLocation" placeholder="Location (e.g. Building 2)">
-    <textarea id="itemDescription" placeholder="Short description..."></textarea>
+
+    <div class="form-group">
+      <span class="icon">🏷️</span>
+      <input type="text" id="itemLabel" placeholder="Item Name (e.g. Umbrella)">
+    </div>
+
+    <div class="form-group date-picker">
+      <span class="icon">📅</span>
+      <input type="date" id="itemDate">
+    </div>
+
+    <div class="form-group">
+      <span class="icon">📍</span>
+      <input type="text" id="itemLocation" placeholder="Location (e.g. Building 2)">
+    </div>
+
+    <div class="form-group">
+      <span class="icon">📝</span>
+      <textarea id="itemDescription" placeholder="Short description..."></textarea>
+    </div>
+
     <label class="anon-option">
       <input type="checkbox" id="anonymousCheckbox">
       Post Anonymously
     </label>
+
     <button class="post-btn" onclick="addLostItem()">POST</button>
   </div>
 
@@ -201,6 +282,7 @@
       .then(result => {
         if (result === "success") {
           alert("Item posted successfully!");
+          window.location.href = "lost.php"; // ✅ redirect after OK
         } else {
           alert("Failed to upload. Server said: " + result);
         }
